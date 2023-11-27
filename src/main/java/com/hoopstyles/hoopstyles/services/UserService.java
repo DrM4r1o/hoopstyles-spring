@@ -17,7 +17,7 @@ public class UserService {
 	BCryptPasswordEncoder passwordEncoder;
 	
 	
-	public UserHoop registrar(UserHoop u) {
+	public UserHoop register(UserHoop u) {
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
 		return repository.save(u);
 	}
@@ -26,7 +26,7 @@ public class UserService {
 		return repository.findById(id).orElse(null);
 	}
 	
-	public UserHoop buscarPorEmail(String email) {
+	public UserHoop findByEmail(String email) {
 		return repository.findFirstByEmail(email);
 	}
 }

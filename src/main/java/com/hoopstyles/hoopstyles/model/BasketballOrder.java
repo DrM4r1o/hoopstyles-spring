@@ -1,6 +1,7 @@
 package com.hoopstyles.hoopstyles.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -11,12 +12,13 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class) // Necesario para el funcionamiento de CreatedDate
-public class Order {
+public class BasketballOrder {
 
 	@Id @GeneratedValue
 	private long id;
@@ -27,12 +29,16 @@ public class Order {
 	
 	@ManyToOne
 	private UserHoop owner;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderLine> orderLine;
 	
-	public Order() { }
+	public BasketballOrder() { }
 
 	// El ID y la Fecha se autogeneran
-	public Order(UserHoop owner) {
+	public BasketballOrder(UserHoop owner, List<OrderLine> orderLine) {
 		this.owner = owner;
+        this.orderLine = orderLine;
 	}
 
 	public long getId() {
@@ -43,19 +49,19 @@ public class Order {
 		this.id = id;
 	}
 
-	public Date getFechaOrder() {
+	public Date getDateOrder() {
 		return dateOrder;
 	}
 
-	public void setFechaOrder(Date dateOrder) {
+	public void setDateOrder(Date dateOrder) {
 		this.dateOrder = dateOrder;
 	}
 
-	public UserHoop getPropietario() {
+	public UserHoop getOwner() {
 		return owner;
 	}
 
-	public void setPropietario(UserHoop owner) {
+	public void setOwner(UserHoop owner) {
 		this.owner = owner;
 	}
 
@@ -72,14 +78,14 @@ public class Order {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		BasketballOrder other = (BasketballOrder) obj;
 		return Objects.equals(dateOrder, other.dateOrder) && id == other.id
 				&& Objects.equals(owner, other.owner);
 	}
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", dateOrder=" + dateOrder + ", owner=" + owner + "]";
+		return "BasketballOrder [id=" + id + ", dateOrder=" + dateOrder + ", owner=" + owner + "]";
 	}
 	
 	

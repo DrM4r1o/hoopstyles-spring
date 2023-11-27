@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hoopstyles.hoopstyles.model.Order;
+import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.repository.OrderRepository;
@@ -19,29 +19,29 @@ public class OrderService {
 	@Autowired
 	ProductService productService;
 	
-	public Order insertar(Order c, UserHoop u) {
-		c.setPropietario(u);
+	public BasketballOrder insert(BasketballOrder c, UserHoop u) {
+		c.setOwner(u);
 		return repository.save(c);
 	}
 	
-	public Order insertar(Order c) {
+	public BasketballOrder insert(BasketballOrder c) {
 		return repository.save(c);
 	}
 	
-	public Product addProductoOrder(Product p, Order c) {
+	public Product addProductoOrder(Product p, BasketballOrder c) {
 		p.setOrder(c);
 		return productService.editar(p);
 	}
 	
-	public Order buscarPorId(long id) {
+	public BasketballOrder searchById(long id) {
 		return repository.findById(id).orElse(null);
 	}
 	
-	public List<Order> todas() {
+	public List<BasketballOrder> all() {
 		return repository.findAll();
 	}
 	
-	public List<Order> porPropietario(UserHoop u) {
+	public List<BasketballOrder> byOwner(UserHoop u) {
 		return repository.findByOwner(u);
 	}
 }

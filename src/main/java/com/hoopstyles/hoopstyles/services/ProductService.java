@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hoopstyles.hoopstyles.model.Order;
+import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.repository.ProductRepository;
@@ -44,7 +44,7 @@ public class ProductService {
 		return repositorio.findByOwner(u);
 	}
 	
-	public List<Product> productsOfOrder(Order c) {
+	public List<Product> productsOfOrder(BasketballOrder c) {
 		return repositorio.findByOrder(c);
 	}
 	

@@ -37,7 +37,7 @@ public class ProductsController {
 	@ModelAttribute("myproducts")
 	public List<Product> myProducts() {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
-		user = userService.buscarPorEmail(email);
+		user = userService.findByEmail(email);
 		return productService.productsOfOwner(user);
 	}
 

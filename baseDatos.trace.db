@@ -1,0 +1,32 @@
+2023-11-27 09:13:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table [*]order (id bigint not null, date_order timestamp(6), owner_id bigint, primary key (id))"; se esperaba "identifier"
+Syntax error in SQL statement "create table [*]order (id bigint not null, date_order timestamp(6), owner_id bigint, primary key (id))"; expected "identifier"; SQL statement:
+create table order (id bigint not null, date_order timestamp(6), owner_id bigint, primary key (id)) [42001-214]
+2023-11-27 09:13:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table if exists [*]order add constraint FK1avei7l4s2aa2e4yift7v98es foreign key (owner_id) references user_hoop"; se esperaba "identifier"
+Syntax error in SQL statement "alter table if exists [*]order add constraint FK1avei7l4s2aa2e4yift7v98es foreign key (owner_id) references user_hoop"; expected "identifier"; SQL statement:
+alter table if exists order add constraint FK1avei7l4s2aa2e4yift7v98es foreign key (owner_id) references user_hoop [42001-214]
+2023-11-27 09:13:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table if exists order_line add constraint FKsag994hw7thnj0xefj4gl1wod foreign key (order_id) references [*]order"; se esperaba "identifier"
+Syntax error in SQL statement "alter table if exists order_line add constraint FKsag994hw7thnj0xefj4gl1wod foreign key (order_id) references [*]order"; expected "identifier"; SQL statement:
+alter table if exists order_line add constraint FKsag994hw7thnj0xefj4gl1wod foreign key (order_id) references order [42001-214]
+2023-11-27 09:13:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table if exists product add constraint FKsmi32wpwaas2obbgwlgu5q7gr foreign key (order_id) references [*]order"; se esperaba "identifier"
+Syntax error in SQL statement "alter table if exists product add constraint FKsmi32wpwaas2obbgwlgu5q7gr foreign key (order_id) references [*]order"; expected "identifier"; SQL statement:
+alter table if exists product add constraint FKsmi32wpwaas2obbgwlgu5q7gr foreign key (order_id) references order [42001-214]
+2023-11-27 09:15:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table [*]order (id bigint not null, date_order timestamp(6), owner_id bigint, primary key (id))"; se esperaba "identifier"
+Syntax error in SQL statement "create table [*]order (id bigint not null, date_order timestamp(6), owner_id bigint, primary key (id))"; expected "identifier"; SQL statement:
+create table order (id bigint not null, date_order timestamp(6), owner_id bigint, primary key (id)) [42001-214]
+2023-11-27 09:15:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table if exists [*]order add constraint FK1avei7l4s2aa2e4yift7v98es foreign key (owner_id) references user_hoop"; se esperaba "identifier"
+Syntax error in SQL statement "alter table if exists [*]order add constraint FK1avei7l4s2aa2e4yift7v98es foreign key (owner_id) references user_hoop"; expected "identifier"; SQL statement:
+alter table if exists order add constraint FK1avei7l4s2aa2e4yift7v98es foreign key (owner_id) references user_hoop [42001-214]
+2023-11-27 09:15:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table if exists order_line add constraint FKsag994hw7thnj0xefj4gl1wod foreign key (order_id) references [*]order"; se esperaba "identifier"
+Syntax error in SQL statement "alter table if exists order_line add constraint FKsag994hw7thnj0xefj4gl1wod foreign key (order_id) references [*]order"; expected "identifier"; SQL statement:
+alter table if exists order_line add constraint FKsag994hw7thnj0xefj4gl1wod foreign key (order_id) references order [42001-214]
+2023-11-27 09:15:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table if exists product add constraint FKsmi32wpwaas2obbgwlgu5q7gr foreign key (order_id) references [*]order"; se esperaba "identifier"
+Syntax error in SQL statement "alter table if exists product add constraint FKsmi32wpwaas2obbgwlgu5q7gr foreign key (order_id) references [*]order"; expected "identifier"; SQL statement:
+alter table if exists product add constraint FKsmi32wpwaas2obbgwlgu5q7gr foreign key (order_id) references order [42001-214]

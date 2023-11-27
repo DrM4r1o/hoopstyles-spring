@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Login</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="campoDatos">
+        <meta name="author" content="Mario Esparza">
+        <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Login.css" th:href="@{/css/Login.css}" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/Header.css" th:href="@{/css/Header.css}" rel="stylesheet" media="all" type="text/css"/>
+    </head>
+    <body>
+        <header>         
+            <a class='nombreLogo' href='/' >HoopsStyle</a>
+        </header>
+        <main>
+            <div class="principal">
+                <h1>Welcome!</h1>
+                <div id="containerForms">
+                    <form class="show" th:action="@{/login-post}" method="POST">
+                        <div class="login forms">
+                            <div class="loginData">
+                                <h2>Login</h2>
+                                <input class="login_user" type="text" label="Usuario" name="username" size="28.5" placeholder="Email" required th:field="*{newUser.email}"/>
+                                <br><input class="login_user" type="password" name="password" size="28.5" placeholder="Password" required th:field="*{newUser.password}">
+                                <span class="errorRegister" th:if="${errorMessage != null}">
+                                    <p th:text="${errorMessage}"></p>
+                                </span>
+                                <div class="keepSession">
+                                    <br><input type="checkbox" id="keep" name="logged" checked>
+                                    <br><label class="logged" for="keep">Keep session</label><br>
+                                </div>
+                                <br><input type="submit" name="submit-login" class="login_button" value="Continue"/>
+                            </div>
+                            <hr>
+                            <div class="changeRegister">
+                                <label class="lablel">Don't have an account yet?</label>
+                                <br><br><button id="goRegister">Register now!</label>
+                            </div>
+                        </div>
+                    </form>
+                    <form class="defaultHidden" th:action="@{/register}" method="POST">
+                        <div class="register forms">
+                            <h2>Register</h2>
+                            <input class="register_user" type="text" label="Email" name="email" size="28.5" placeholder="Email" th:field="*{newUser.email}">
+                            <br><input class="register_user" type="text" name="Name" size="28.5" placeholder="Name" th:field="*{newUser.name}">
+                            <br><input class="register_user passRegister" type="password" name="password" size="28.5" placeholder="Passworrd" th:field="*{newUser.password}">
+                            <br><input class="register_user passRegister" type="password" name="password-confirm" size="28.5" placeholder="Confirm password"/>
+                            <br><input id="sumbitRegister" type="submit" name="submit-register" value="Confirm"/>
+                            <input id="sumbitRegister" type="hidden" name="submit-register" value="Confirm"/>
+                            <hr>
+                            <div class="changeLogin">
+                                <label class="lablel">Do you already have an account? Login</label>
+                                <br><button id="returnLogin">Return</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <script>
+            const registerForm = document.querySelectorAll("form")[1];
+            
+
+            registerForm.addEventListener("submit", function(e){
+                e.preventDefault();
+                const spanError = document.querySelector(".errorRegister");
+                const inputsPassword = document.querySelectorAll(".passRegister");
+                const inputEmail = e.target[0];
+
+                if(correctEmail(inputEmail) && correctPasswords(inputsPassword[0], inputsPassword[1]))
+                {
+                    e.target.submit();
+                }
+                else
+                {
+                    spanError.classList.add("show");
+                    spanError.textContent = "Some fields are incorrect";
+                }
+            });
+
+            document.addEventListener("animationend", animateAppear)
+
+            document.getElementById("goRegister").addEventListener("click", function(e) {
+                e.preventDefault();
+                removeAnimations();
+                document.getElementsByTagName("form")[1].classList.add("hide");
+                document.getElementsByTagName("form")[0].classList.add("animateHidden");
+                document.getElementsByTagName("form")[1].classList.add("showNow");
+                document.getElementById("containerForms").classList.add("rotateCardForward");
+            });
+
+            document.getElementById("returnLogin").addEventListener("click", function(e) { 
+                e.preventDefault();
+                removeAnimations();
+                document.getElementsByTagName("form")[0].classList.add("hide");
+                document.getElementsByTagName("form")[1].classList.add("animateHidden");
+                document.getElementsByTagName("form")[0].classList.add("showNow");
+                document.getElementById("containerForms").classList.add("rotateCardReverse");
+
+            });
+
+            function removeAnimations()
+            {
+                document.getElementsByTagName("form")[0].classList = "";
+                document.getElementsByTagName("form")[1].classList = "";
+                document.getElementById("containerForms").classList = "";
+            }
+
+            function animateAppear(e) 
+            {
+                if(e.animationName == "fade-out")
+                {
+                    let originForm = [...e.target.parentElement.children].indexOf(e.target);
+                    document.getElementsByTagName("form")[originForm].classList.add("hide");
+                }
+                if(e.animationName == "fade-in")
+                {
+                    let originForm = [...e.target.parentElement.children].indexOf(e.target);
+                    
+                }
+                if(e.animationName == "rotateForward" || e.animationName == "rotateReverse")
+                {
+                    let targetForm = document.getElementsByClassName("showNow")[0];
+                    targetForm.classList.add("animateShow");
+                    targetForm.classList.add("show");
+                    targetForm.classList.remove("showNow");
+                }
+            }
+
+            function correctEmail(emailInput) 
+            {
+                const email = emailInput.value;
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                const correct = emailRegex.test(email);
+                if(!correct) emailInput.classList.add("error");
+                else emailInput.classList.remove("error");
+                return correct;
+            }
+
+            function correctPasswords(passwordInput, confirmPasswordInput)
+            {
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                let correct = false;
+
+                if(password != confirmPassword || password == "" || confirmPassword == "")
+                {
+                    passwordInput.classList.add("error");
+                    confirmPasswordInput.classList.add("error");
+                    correct = false;
+                }
+                else
+                {
+                    passwordInput.classList.remove("error");
+                    confirmPasswordInput.classList.remove("error");
+                    correct = true;
+                }
+
+                return correct;
+            }
+
+            function correctDNI(dniInput)
+            {
+                const dni = dniInput.value;
+                const dniRegex = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i;
+                let correct = dniRegex.test(dni);
+
+                if(correct)
+                {
+                    const letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
+                    const numero = dni.slice(0, 8);
+                    const letraCalculada = letras[numero % 23].toUpperCase();
+                    const letraDNI = dni.charAt(8).toUpperCase();
+    
+                    if(letraCalculada != letraDNI)
+                    {
+                        dniInput.classList.add("error");
+                        correct = false;
+                    }
+                    else
+                    {
+                        dniInput.classList.remove("error");
+                    }
+                } 
+                else 
+                {
+                    dniInput.classList.add("error");
+                    correct = false;
+                }
+
+                return correct;
+            }
+        </script>
+    </body>
+</html>

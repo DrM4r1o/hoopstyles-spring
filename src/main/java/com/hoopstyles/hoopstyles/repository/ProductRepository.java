@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.hoopstyles.hoopstyles.model.Order;
+import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
 
@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	List<Product> findByOwner(UserHoop owner);
 	
 	//Buscar todos los productos de una compra
-	List<Product> findByOrder(Order compra);
+	List<Product> findByOrder(BasketballOrder compra);
 	
 	//Buscar todos los productos donde la compra sea nula (que no se hayan vendido)
 	List<Product> findByOrderIsNull();

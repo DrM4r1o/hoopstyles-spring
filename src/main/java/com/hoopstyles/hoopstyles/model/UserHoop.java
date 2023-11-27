@@ -28,7 +28,7 @@ public class UserHoop {
 	@Temporal(TemporalType.TIMESTAMP) //Hace que el campo fechaCompra se mapee como fecha y hora en BD
 	private Date dateCreation;
 	
-	private String email; 
+	private String email;
 	private String password;
 	
 	public UserHoop() { }
@@ -37,6 +37,12 @@ public class UserHoop {
 		this.name = name;
 		this.surname = surname;
 		this.profileImg = profileImg;
+		this.email = email;
+		this.password = password;
+	}
+
+    public UserHoop(String name, String email, String password) {
+        this.name = name;
 		this.email = email;
 		this.password = password;
 	}

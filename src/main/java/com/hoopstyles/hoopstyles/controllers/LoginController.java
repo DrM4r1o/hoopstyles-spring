@@ -6,9 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.services.UserService;
+
 
 @Controller
 public class LoginController {
@@ -18,18 +21,33 @@ public class LoginController {
 	
 	@GetMapping("/")
 	public String welcome() {
-		return "redirect:/public/";
+		return "index";
 	}
 	
-	@GetMapping("/auth/login")
-	public String login(Model model) {
-		model.addAttribute("usuario", new UserHoop()); //Le pasamos el UserHoop por si hacemos un registro
+	@GetMapping("/login")
+	public String login(Model model, @RequestParam(name="errorMessage", required=false) String errorMessage) {
+		if(errorMessage != null) {
+            model.addAttribute("errorMessage", errorMessage);
+        }
+
+        model.addAttribute("newUser", new UserHoop());
 		return "login";
 	}
 	
-	@PostMapping("/auth/register")
-	public String register(@ModelAttribute UserHoop usuario) {
-		userService.registrar(usuario);
-		return "redirect:/auth/login"; //Para pasar a la página de inicio del usuario hay que investigar más sobre Spring Security
+	@PostMapping("/register")
+	public String register(@ModelAttribute UserHoop user) {
+		userService.register(user);
+        System.out.println("Usuario registrado: " + user);
+		return "redirect:/login"; //Para pasar a la página de inicio del usuario hay que investigar más sobre Spring Security
 	}
+
+    @PostMapping("/login-post")
+    public String loginPost(@ModelAttribute UserHoop user, RedirectAttributes ra) {
+        UserHoop userFound = userService.findByEmail(user.getEmail());
+        if (userFound == null) {
+            ra.addAttribute("errorMessage", "User or password incorrect");
+            return "redirect:/login";
+        }
+        return "redirect:/";
+    }
 }

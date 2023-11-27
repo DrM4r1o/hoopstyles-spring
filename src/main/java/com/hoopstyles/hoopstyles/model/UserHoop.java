@@ -6,6 +6,9 @@ import java.util.Objects;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +32,8 @@ public class UserHoop {
 	private Date dateCreation;
 	
 	private String email;
+
+    @Column @JsonProperty
 	private String password;
 	
 	public UserHoop() { }

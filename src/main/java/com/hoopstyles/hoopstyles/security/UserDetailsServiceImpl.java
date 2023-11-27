@@ -20,18 +20,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	//Se ejecuta al iniciar sesión
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		
-		UserHoop user = repositorio.findFirstByEmail(username);
+		UserHoop user = repositorio.findFirstByEmail(email);
+
+        System.out.println(email);
+
 		UserBuilder builder = null;
 		
 		if (user != null) {
-			builder = User.withUsername(username); // Le damos el User
+			builder = User.withUsername(email); // Le damos el User
 			builder.disabled(false);
 			builder.password(user.getPassword()); // Y le damos la contraseña
 			builder.authorities(new SimpleGrantedAuthority("ROLE_USER")); // Autoridades por defecto
 		}else {
-			throw new UsernameNotFoundException("User no encontraod");
+			throw new UsernameNotFoundException("User not found");
 		}
 		
 		return builder.build();

@@ -17,7 +17,7 @@
             <div class="principal">
                 <h1>Welcome!</h1>
                 <div id="containerForms">
-                    <form class="show" th:action="@{/login-post}" method="POST">
+                    <form class="show" th:action="@{/auth/login-post}" method="POST">
                         <div class="login forms">
                             <div class="loginData">
                                 <h2>Login</h2>
@@ -35,11 +35,11 @@
                             <hr>
                             <div class="changeRegister">
                                 <label class="lablel">Don't have an account yet?</label>
-                                <br><br><button id="goRegister">Register now!</label>
+                                <br><br><button id="goRegister">Register now!</button>
                             </div>
                         </div>
                     </form>
-                    <form class="defaultHidden" th:action="@{/register}" method="POST">
+                    <form class="defaultHidden" th:action="@{/auth/register}" method="POST">
                         <div class="register forms">
                             <h2>Register</h2>
                             <input class="register_user" type="text" label="Email" name="email" size="28.5" placeholder="Email" th:field="*{newUser.email}">

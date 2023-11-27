@@ -18,7 +18,6 @@ public class SecurityConfig {
 	@Autowired
 	UserDetailsService userDetailsService;
 	
-	//Algoritmo de cifrado
 	@Bean
     protected BCryptPasswordEncoder getPassWordEncoder() {
         return new BCryptPasswordEncoder();
@@ -32,15 +31,6 @@ public class SecurityConfig {
 		authProvider.setPasswordEncoder(getPassWordEncoder());
 		return authProvider;
 	}
-	/*
-	@Bean
-	protected AuthenticationManager authentication(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(getPassWordEncoder());
-		return auth.build();
-	}
-	*/
-	
-	
 
 	@Bean
 	protected SecurityFilterChain filter(HttpSecurity http) throws Exception {
@@ -54,19 +44,19 @@ public class SecurityConfig {
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/public/**")).permitAll()
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).permitAll()
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/files/**")).permitAll()
-				.anyRequest().authenticated() // Cualquier otra ruta requerirá autenticación
-				)
+				.anyRequest().authenticated()
+			)
 			.formLogin(login -> login.loginPage("/auth/login") //Página por defecto login
-									.defaultSuccessUrl("/public/index", true) //Si el login es correcto, página por defecto
-									.loginProcessingUrl("/auth/login-post") // Controlador que manejará la autenticación. Lo implementa Spring Security
-									.permitAll() //
-					)
+                                     .usernameParameter("username") //Nombre del campo del formulario
+                                     .loginProcessingUrl("/auth/login-post") // Controlador que manejará la autenticación. Lo implementa Spring Security
+									 .defaultSuccessUrl("/", true) //Si el login es correcto, página por defecto
+									 .permitAll() //
+			)
 			.logout(logout -> logout
 									.logoutUrl("/auth/logout") // Cuanto mandemos al usuario a esta ruta en POST se deslogueará automáticamente
-									.logoutSuccessUrl("/public/index")	//Cuando se desloguee
+									.logoutSuccessUrl("/")	//Cuando se desloguee
 			
-					)
-			//Esto son opciones de seguridad que quitamos necesarias para acceder a H2 console
+			)
 			.csrf(csrf -> csrf.disable())
 			.headers(headers -> headers.frameOptions( frame -> frame.disable())
 			);

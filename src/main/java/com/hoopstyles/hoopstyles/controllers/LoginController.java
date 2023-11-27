@@ -25,34 +25,37 @@ public class LoginController {
 	
 	@GetMapping("/")
 	public String welcome(@ModelAttribute Model model) {
-        model.addAttribute("categories", categoryService.all());
+        if(categoryService.all().size() > 0)
+        {
+            model.addAttribute("categories", categoryService.all());
+        }
 		return "index";
 	}
 	
-	@GetMapping("/login")
-	public String login(Model model, @RequestParam(name="errorMessage", required=false) String errorMessage) {
-		if(errorMessage != null) {
-            model.addAttribute("errorMessage", errorMessage);
+	@GetMapping("/auth/login")
+	public String login(Model model, @RequestParam(name="error", required=false) String errorMessage) {
+        if(errorMessage != null) {
+            model.addAttribute("errorMessage", "User or password incorrect");
         }
-
         model.addAttribute("newUser", new UserHoop());
 		return "login";
 	}
 	
-	@PostMapping("/register")
+	@PostMapping("/auth/register")
 	public String register(@ModelAttribute UserHoop user) {
 		userService.register(user);
         System.out.println("Usuario registrado: " + user);
-		return "redirect:/login"; //Para pasar a la página de inicio del usuario hay que investigar más sobre Spring Security
+		return "redirect:/auth/login"; //Para pasar a la página de inicio del usuario hay que investigar más sobre Spring Security
 	}
 
-    @PostMapping("/login-post")
-    public String loginPost(@ModelAttribute UserHoop user, RedirectAttributes ra) {
-        UserHoop userFound = userService.findByEmail(user.getEmail());
-        if (userFound == null) {
-            ra.addAttribute("errorMessage", "User or password incorrect");
-            return "redirect:/login";
-        }
-        return "redirect:/";
-    }
+    // @PostMapping("/auth/login-post")
+    // public String loginPost(@ModelAttribute UserHoop user, RedirectAttributes ra) {
+    //     System.out.println("reached");
+    //     UserHoop userFound = userService.findByEmail(user.getEmail());
+    //     if (userFound == null) {
+    //         ra.addAttribute("errorMessage", "User or password incorrect");
+    //         return "redirect:/login";
+    //     }
+    //     return "redirect:/";
+    // }
 }

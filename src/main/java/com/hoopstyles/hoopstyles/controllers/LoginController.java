@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.services.UserService;
+import com.hoopstyles.hoopstyles.services.CategoryService;
 
 
 @Controller
@@ -18,9 +19,13 @@ public class LoginController {
 
 	@Autowired
 	UserService userService;
+
+    @Autowired
+	CategoryService categoryService;
 	
 	@GetMapping("/")
-	public String welcome() {
+	public String welcome(@ModelAttribute Model model) {
+        model.addAttribute("categories", categoryService.all());
 		return "index";
 	}
 	

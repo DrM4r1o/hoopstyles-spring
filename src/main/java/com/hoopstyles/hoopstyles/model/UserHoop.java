@@ -31,6 +31,7 @@ public class UserHoop {
 	@Temporal(TemporalType.TIMESTAMP) //Hace que el campo fechaCompra se mapee como fecha y hora en BD
 	private Date dateCreation;
 	
+    @Column(name = "username")
 	private String email;
 
     @Column @JsonProperty
@@ -60,35 +61,35 @@ public class UserHoop {
 		this.id = id;
 	}
 
-	public String getname() {
+	public String getName() {
 		return name;
 	}
 
-	public void setname(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getsurname() {
+	public String getSurname() {
 		return surname;
 	}
 
-	public void setsurname(String surname) {
+	public void setSurname(String surname) {
 		this.surname = surname;
 	}
 
-	public String getprofileImg() {
+	public String getProfileImg() {
 		return profileImg;
 	}
 
-	public void setprofileImg(String profileImg) {
+	public void setProfileImg(String profileImg) {
 		this.profileImg = profileImg;
 	}
 
-	public Date getdateCreation() {
+	public Date getDateCreation() {
 		return dateCreation;
 	}
 
-	public void setdateCreation(Date dateCreation) {
+	public void setDateCreation(Date dateCreation) {
 		this.dateCreation = dateCreation;
 	}
 

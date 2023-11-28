@@ -24,8 +24,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		UserHoop user = repositorio.findFirstByEmail(email);
 
-        System.out.println(email);
-
 		UserBuilder builder = null;
 		
 		if (user != null) {

@@ -21,8 +21,8 @@
                         <div class="login forms">
                             <div class="loginData">
                                 <h2>Login</h2>
-                                <input class="login_user" type="text" label="Usuario" name="username" size="28.5" placeholder="Email" required th:field="*{newUser.email}"/>
-                                <br><input class="login_user" type="password" name="password" size="28.5" placeholder="Password" required th:field="*{newUser.password}">
+                                <input class="login_user" type="text" label="Usuario" name="username" size="28.5" placeholder="Email" required/>
+                                <br><input class="login_user" type="password" name="password" size="28.5" placeholder="Password" required>
                                 <span class="errorRegister" th:if="${errorMessage != null}">
                                     <p th:text="${errorMessage}"></p>
                                 </span>

@@ -11,61 +11,42 @@
     </head>
     <body>
         <header>
-            <a class='nombreLogo' href='/' >HoopsStyle</a>
+            <a class='nombreLogo' href='/' >HoopStyles</a>
             <div id='header-items'>
                 <div id='searchBar'>
                     <form id='formSearch' action='' method='GET'>
                         <input type='search' name='search' placeholder='Search...'/>
-                        <input type='image' src='/icons/Lens.png' name='submit-search'/>
+                        <input type='image' src='/icons/Lens.svg' name='submit-search'/>
                     </form>
                 </div>
                 <div id='cart'>
-                    <a href=''><img id='cartImg' src='/icons/Cart.png' alt='cart'></a>
+                    <a href=''><img id='cartImg' src='/icons/Cart.svg' alt='cart'></a>
                     <span id='numberCart'>0</span>
                 </div>
-                <a href='./'>All Products</a>
-                <a id='user' href=''>
-                    <img id='userImg' src='/icons/User.png' alt=''>
-                </a>
+                <div id='user' href='/profile'>
+                    <img id='userImg' src='/icons/User.svg' alt=''>
+                    <div class="profileDetails">
+                        <a href='/auth/login'>Login</a>
+                        <a href='/register'>Register</a>
+                    </div>
+                </div>
             </div>
         </header>
-        <!-- <?php
-            echo mainHeader();
-
-            if($bd->query($queryProds)->rowCount() == 0)
-            {
-                if(!$filter) 
-                {
-                    session_start();
-                    $_SESSION["products-created"] = false;
-                    header("Location:./PHP/CreateProducts.php");
-                } else
-                {
-                    $error = "<h2 style='position: absolute; top: 10%; left: 50%; '>No products found</h2>";
-                    $noProducts = true;
-                }
-            } else $products = $bd->query($queryProds);
-            $queryCateg = "SELECT * FROM Categories ORDER BY CASE WHEN category = 'No category' THEN 1 ELSE 0 END, category";
-            $categories = $bd->query($queryCateg);
-        ?> -->
         <main>
             <div class="categories">
                 <form action="" method="GET">
                     <div class='categorie'>
-                        <label><input type='checkbox' name='categorie' value='All'/>All</label>
+                        <label>
+                            <input type='checkbox' name='categorie' value='All'/>
+                            <span>All</span>
+                        </label>
                     </div>
-                    <div th:each="student: ${students}" class="categorie">
-                        <label><input type='checkbox' value=''></label>
+                    <div th:each="category : ${categories}" class="categorie">
+                        <label>
+                            <input type='checkbox' name="categorie" th:value="${category.getName()}">
+                            <span th:text="${category.getName()}"></span>
+                        </label>
                     </div>
-                    <!-- <?php
-                        $count = 0;
-                        foreach ($categories as $categorie) {
-                            echo "<div class='categorie'>
-                                    <label><input type='checkbox' name='categorie".$count."' value='".$categorie["category"]."'/>".$categorie["category"]."</label>
-                                  </div>";
-                            $count++;
-                        }
-                    ?> -->
                     <hr>
                     <label for="price">Filter by price (€)</label>
                     <div id="rangePrices">
@@ -113,12 +94,18 @@
             const checkboxes = document.querySelectorAll("input[type=checkbox]");
             const minValue = document.getElementById("minValue");
             const minInput = document.getElementById("minPriceRange");
+            const profile = document.querySelector("#userImg");
 
             const maxValue = document.getElementById("maxValue");
             const maxInput = document.getElementById("maxPriceRange");
             
             minValue.textContent = minInput.value;
             maxValue.textContent = maxInput.value;
+
+            profile.addEventListener("click", (e) => {
+                let visibilityState = document.querySelector(".profileDetails").style.visibility;
+                document.querySelector(".profileDetails").style.visibility = visibilityState == "visible" ? "hidden" : "visible";
+            });
 
             minInput.addEventListener("input", (event) => {
                 minValue.textContent = event.target.value;

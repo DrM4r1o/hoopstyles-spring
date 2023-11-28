@@ -32,7 +32,6 @@ input[type="search"] {
     min-width: 50px;
     margin-right: 10px;
     border: 0;
-
 }
 
 input[type="search"]:focus {
@@ -53,37 +52,45 @@ input[type="search"]:focus {
 
 #formSearch {
 	display: flex;
-    background-color: white;
-    border: 2px solid black;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.425);
+    transition: 0.3s;
 }
 
-#userImg {
-    height: 35px;
+#formSearch:has(input[type="search"]:focus) {
+    background-color: rgba(255, 255, 255);
+}
+
+#formSearch > * {
+    background-color: transparent;
+}
+
+#formSearch > input[type="image"] {
     width: 35px;
+    height: 20px;
+}
+
+#userImg, #cartImg {
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
 }
 
 #cart, #user {
     position: relative;
 }
 
-#cartImg {
-    height: 35px;
-    width: 35px;
-    cursor: pointer;
-}
-
 #numberCart {
     position: absolute;
-    top: 8%;
-    right: 6%;
+    top: 6%;
+    right: 11%;
     width: 9px;
     height: 9px;
     background-color: rgb(255, 92, 92);
     border-radius: 50%;
     padding: 7px;
-    font-size: 0.6rem ;
+    font-size: 0.6rem;
     color: white;
     text-align: center;
 }
@@ -105,8 +112,33 @@ input[type="search"]:focus {
 .nombreLogo {
     font-family: 'Cinzel Decorative', sans-serif;
     font-weight: 700;
-    font-size: 35px;
+    font-size: 45px;
     padding: 20px;
+    transition: 0.2s;
+}
+
+.profileDetails {
+    visibility: hidden;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 10px;
+    width: 200px;
+    height: 200px;
+    top: 80%;
+    right: 18%;
+    z-index: 1;
+    transition: fade-in 0.2s;
+
+}
+
+.profileDetails > * {
+    color: black !important;
+    padding: 5px;
 }
 
 a {

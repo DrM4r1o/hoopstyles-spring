@@ -21,7 +21,6 @@ public class PublicZoneController {
 	@Autowired
 	ProductService productService;
 	
-	// De esta forma siempre tendremos disponible los productos no vendidos. Lo incluye en el modelo
 	@ModelAttribute("products")
 	public List<Product> productUnsold(){
 		return productService.productUnsold();

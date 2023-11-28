@@ -38,12 +38,11 @@ public class SecurityConfig {
 		http
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
-				.requestMatchers(AntPathRequestMatcher.antMatcher("/css/**")).permitAll()
+				.requestMatchers(AntPathRequestMatcher.antMatcher("/css/**")).permitAll()				
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/icons/**")).permitAll()
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/webjars/**")).permitAll()
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-				.requestMatchers(AntPathRequestMatcher.antMatcher("/public/**")).permitAll()
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).permitAll()
-				.requestMatchers(AntPathRequestMatcher.antMatcher("/files/**")).permitAll()
 				.anyRequest().authenticated()
 			)
 			.formLogin(login -> login.loginPage("/auth/login") //Página por defecto login

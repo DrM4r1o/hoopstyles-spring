@@ -12,7 +12,6 @@ import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.services.UserService;
 import com.hoopstyles.hoopstyles.services.CategoryService;
 
-
 @Controller
 public class LoginController {
 
@@ -21,15 +20,6 @@ public class LoginController {
 
     @Autowired
 	CategoryService categoryService;
-	
-	@GetMapping("/")
-	public String welcome(Model model) {
-        if(categoryService.all().size() > 0)
-        {
-            model.addAttribute("categories", categoryService.all());
-        }
-		return "index";
-	}
 	
 	@GetMapping("/auth/login")
 	public String login(Model model, @RequestParam(name="error", required=false) String errorMessage) {

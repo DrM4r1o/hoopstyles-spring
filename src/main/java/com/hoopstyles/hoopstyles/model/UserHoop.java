@@ -3,8 +3,10 @@ package com.hoopstyles.hoopstyles.model;
 import java.util.Date;
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.redis.core.RedisHash;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -31,7 +33,6 @@ public class UserHoop {
 	@Temporal(TemporalType.TIMESTAMP) //Hace que el campo fechaCompra se mapee como fecha y hora en BD
 	private Date dateCreation;
 	
-    @Column(name = "username")
 	private String email;
 
     @Column @JsonProperty

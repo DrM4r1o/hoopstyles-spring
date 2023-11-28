@@ -1,6 +1,8 @@
 package com.hoopstyles.hoopstyles.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,12 @@ public class LoginController {
 	
 	@GetMapping("/auth/login")
 	public String login(Model model, @RequestParam(name="error", required=false) String errorMessage) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(principal instanceof User) {
+            return "redirect:/";
+        }
+
         if(errorMessage != null) {
             model.addAttribute("errorMessage", "User or password incorrect");
         }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>HoopsStyle</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="MainPage">
+        <meta name="author" content="Mario Esparza">
+        <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/Products.css" rel="stylesheet" media="all" type="text/css"/>
+    </head>
+    <body>
+        <header>
+            <a class='nombreLogo' href='/'>HoopStyles</a>
+            <div id='header-items'>
+                <div id='searchBar'>
+                    <form id='formSearch' action='' method='GET'>
+                        <input type='search' name='search' placeholder='Search...'/>
+                        <input type='image' src='/icons/Lens.svg' name='submit-search'/>
+                    </form>
+                </div>
+                <div id='cart'>
+                    <a href=''><img id='cartImg' src='/icons/Cart.svg' alt='cart'></a>
+                    <span th:if="${user != null}" id='numberCart'>0</span>
+                </div>
+                <div id='user' href='/profile'>
+                    <img id='userImg' src='/icons/User.svg' alt=''>
+                    <div class="profileDetails">
+                        <a th:if="${user == null}" href='/auth/login'>Login</a>
+                        <a href='/profile'>Profile</a>
+                        <a th:if="${user != null}" href='/auth/logout'>Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <form>
+                <div class="product">
+                    <img th:src="${product.getImage()}" alt='product'/>
+                    <h2 th:text="${product.getName()}"></h2>
+                    <p th:text="${product.getPrice()}"></p>
+                    <input type="submit" value="Add to cart"/>
+                </div>
+            </form>
+        </main>
+    </body>
+</html>

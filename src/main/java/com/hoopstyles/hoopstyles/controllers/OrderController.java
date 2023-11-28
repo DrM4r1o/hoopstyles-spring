@@ -51,7 +51,7 @@ public class OrderController {
 		List<Product> productsCart = productsCart();
 		
 		if(productsCart != null) {
-			return productsCart.stream().mapToDouble(p -> p.getPrecio()).sum();
+			return productsCart.stream().mapToDouble(p -> p.getPrice()).sum();
 		}
 		return 0.0;
 	}
@@ -122,7 +122,7 @@ public class OrderController {
 		List<Product> products = productService.productsOfOrder(c);
 		model.addAttribute("products", products);
 		model.addAttribute("Order",c);
-		model.addAttribute("total_Order", products.stream().mapToDouble(p -> p.getPrecio()).sum());
+		model.addAttribute("total_Order", products.stream().mapToDouble(p -> p.getPrice()).sum());
 		return "app/Order/bill";
 	}
 	

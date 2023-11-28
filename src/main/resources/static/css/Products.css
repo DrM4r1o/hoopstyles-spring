@@ -9,6 +9,27 @@ main {
     width: 100vw;
 }
 
+.categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.categorie {
+    background-color: rgb(26, 25, 25);
+    padding: 10px;
+    width: 120px;
+    border-radius: 5px;
+}
+
+.categorie:hover {
+    box-shadow: inset 0px 0px 0px 2px rgb(255, 92, 92);
+}
+
+.categorie:has(input:checked) {
+    box-shadow: inset 0px 0px 0px 2px rgb(255, 92, 92);
+}
+
 .categorie > label {
     all: unset;
     margin-bottom: 5px;
@@ -16,7 +37,7 @@ main {
     cursor: pointer;
 }
 
-label > input[type="checkbox"] {
+.hiddenCheckbox {
     display: none;
 }
 
@@ -50,20 +71,25 @@ label > input[type="checkbox"] {
 .products {
     min-width: 85%;
     max-width: 85%;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 0.2fr);
     justify-content: center;
 }
 
 .product {
-    width: 300px;
-    height: 400px; 
-    margin-right: 20px;
-    margin-left: 20px;
-    margin-bottom: 80px;
+    width: 350px;
+    height: 500px; 
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 40px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: white;
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .product > img {
@@ -71,20 +97,32 @@ label > input[type="checkbox"] {
     min-height: 400px; 
 }
 
-.categories {
+.filters {
     width: 15%;
-    display: flex;
+    display: grid;
     flex-direction: column;
-    margin-left: 50px;
+    margin-left: 20px;
+}
+
+.productCategory {
+    font-weight: 500;
+    font-size: 0.7rem;
+    margin-left: 10px;
+}
+
+.name {
+    font-size: 1.3rem;
+    margin: 10px;
 }
 
 .price {
-    margin-bottom: 3px;
+    color: #ca0017;
+    margin: 10px;
 }
 
 .priceRange {
     margin-top: 13px;
-    width: 87%;
+    width: 80%;
     background-color: transparent;
 }
 
@@ -147,4 +185,22 @@ label > input[type="checkbox"] {
     background-color: grey !important;
     border-color: grey !important;
     color: white !important;
+}
+
+@media (width < 1900px) {
+    .products {
+        grid-template-columns: repeat(3, 0.2fr);
+    }
+}
+
+@media (width < 1500px) {
+    .products {
+        grid-template-columns: repeat(2, 0.2fr);
+    }
+}
+
+@media (width < 1200px) {
+    .products {
+        grid-template-columns: repeat(1, 0.2fr);
+    }
 }

@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.hoopstyles.hoopstyles.model.Category;
+import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.repository.CategoryRepository;
+import com.hoopstyles.hoopstyles.repository.ProductRepository;
 
 @SpringBootApplication
 public class HoopstylesApplication {
@@ -15,12 +17,15 @@ public class HoopstylesApplication {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(HoopstylesApplication.class, args);
     }
 
     @Bean
-    public CommandLineRunner demo() {
+    public CommandLineRunner categories() {
         if(categoryRepository.count() > 0) {
             return null;
         }
@@ -32,5 +37,20 @@ public class HoopstylesApplication {
             categoryRepository.save(new Category("Accessories", "Accessories category"));
         };
     }
+
+    @Bean
+    public CommandLineRunner products() {
+        if(productRepository.count() > 0) {
+            return null;
+        }
+        return (args) -> {
+            productRepository.save(new Product("Trousers 1", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
+            productRepository.save(new Product("Trousers 2", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
+            productRepository.save(new Product("Trousers 3", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
+            productRepository.save(new Product("Trousers 4", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
+            productRepository.save(new Product("Trousers 5", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
+        };
+    }
+
 }
 

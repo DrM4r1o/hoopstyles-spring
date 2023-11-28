@@ -28,7 +28,7 @@ public class ProductService {
 		repositorio.deleteById(id);
 	}
 	
-	public Product editar(Product p) {
+	public Product edit(Product p) {
 		return repositorio.save(p);
 	}
 	
@@ -36,7 +36,7 @@ public class ProductService {
 		return repositorio.findById(id).orElse(null);
 	}
 	
-	public List<Product> findAll() {
+	public List<Product> all() {
 		return repositorio.findAll();
 	}
 	

@@ -30,7 +30,7 @@ public class OrderService {
 	
 	public Product addProductoOrder(Product p, BasketballOrder c) {
 		p.setOrder(c);
-		return productService.editar(p);
+		return productService.edit(p);
 	}
 	
 	public BasketballOrder searchById(long id) {

@@ -29,11 +29,29 @@ public class Product {
 	public Product() {}
 
 	public Product(String name, float price, String image, UserHoop owner) {
-		this.name = name;
-		this.price = price;
+        ProductBase(name, price);
 		this.image = image;
 		this.owner = owner;
 	}
+
+    public Product(String name, float price, String image) {
+        ProductBase(name, price);
+        this.image = image;
+	}
+
+    public Product(String name, float price, UserHoop owner) {
+        ProductBase(name, price);
+        this.owner = owner;
+	}
+
+    public Product(String name, float price) {
+        ProductBase(name, price);
+	}
+
+    private void ProductBase(String name, float price) {
+        this.name = name;
+        this.price = price;
+    }
 
 	public long getId() {
 		return id;
@@ -43,35 +61,35 @@ public class Product {
 		this.id = id;
 	}
 
-	public String getNombre() {
+	public String getName() {
 		return name;
 	}
 
-	public void setNombre(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public float getPrecio() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrecio(float price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 
-	public String getImagen() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImagen(String image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
-	public UserHoop getPropietario() {
+	public UserHoop getOwner() {
 		return owner;
 	}
 
-	public void setPropietario(UserHoop owner) {
+	public void setOwner(UserHoop owner) {
 		this.owner = owner;
 	}
 

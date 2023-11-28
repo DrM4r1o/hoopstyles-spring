@@ -122,22 +122,24 @@ input[type="search"]:focus {
     position: absolute;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(255, 255, 255);
+    align-items: end;
+    background-color: rgb(26, 25, 25);
     border-radius: 5px;
     padding: 10px;
-    width: 200px;
-    height: 200px;
+    width: 70px;
+    height: 60px;
     top: 80%;
     right: 18%;
     z-index: 1;
-    transition: fade-in 0.2s;
+    color: white;
+}
 
+.profileDetailsVisible {
+    visibility: visible;
+    animation: fade-in 0.3s;
 }
 
 .profileDetails > * {
-    color: black !important;
     padding: 5px;
 }
 
@@ -149,6 +151,15 @@ a {
 a:hover {
     color: rgb(255, 92, 92);
     transition: 0.1s;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to { 
+        opacity: 1;
+    }
 }
 
 

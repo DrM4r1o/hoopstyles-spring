@@ -13,8 +13,10 @@ public class Product {
 	@Id @GeneratedValue
 	private long id;
 	
-	private String name;
-	
+	private String name;	
+    
+    private String description;
+
 	private float price;
 	
 	private String image;
@@ -28,15 +30,17 @@ public class Product {
 	
 	public Product() {}
 
-	public Product(String name, float price, String image, UserHoop owner) {
+	public Product(String name, float price, String image, UserHoop owner, String description) {
         ProductBase(name, price);
 		this.image = image;
 		this.owner = owner;
+        this.description = description;
 	}
 
-    public Product(String name, float price, String image) {
+    public Product(String name, float price, String image, String description) {
         ProductBase(name, price);
         this.image = image;
+        this.description = description;
 	}
 
     public Product(String name, float price, UserHoop owner) {
@@ -100,6 +104,14 @@ public class Product {
 	public void setOrder(BasketballOrder Order) {
 		this.order = Order;
 	}
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 	@Override
 	public int hashCode() {

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hoopstyles.hoopstyles.services.CategoryService;
 import com.hoopstyles.hoopstyles.services.ProductService;
@@ -29,16 +30,15 @@ public class IndexController {
             name = user.getUsername();
         }
 
-        if(categoryService.all().size() > 0)
-        {
-            model.addAttribute("categories", categoryService.all());
-        }
-
-        if(productService.all().size() > 0)
-        {
-            model.addAttribute("products", productService.all());
-        }
+        model.addAttribute("categories", categoryService.all());
+        model.addAttribute("products", productService.all());
         model.addAttribute("user", name);
 		return "index";
 	}
+
+    @GetMapping("/products/filter")
+    public String filterProducts(@RequestParam(name="category", required=false) String categories, Model model) {
+        // model.addAttribute("products", productService.filter(categories));
+        return "index";
+    }
 }

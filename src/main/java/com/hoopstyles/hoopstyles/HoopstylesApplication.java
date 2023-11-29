@@ -44,11 +44,11 @@ public class HoopstylesApplication {
             return null;
         }
         return (args) -> {
-            productRepository.save(new Product("Trousers 1", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
-            productRepository.save(new Product("Trousers 2", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
-            productRepository.save(new Product("Trousers 3", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
-            productRepository.save(new Product("Trousers 4", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
-            productRepository.save(new Product("Trousers 5", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823"));
+            productRepository.save(new Product("Trousers 1", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823", "Descroption exapmple"));
+            productRepository.save(new Product("Trousers 2", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823", "Descroption exapmple"));
+            productRepository.save(new Product("Trousers 3", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823", "Descroption exapmple"));
+            productRepository.save(new Product("Trousers 4", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823", "Descroption exapmple"));
+            productRepository.save(new Product("Trousers 5", 20.0f, "https://hoopstyles.com/cdn/shop/files/8ace79a7c36290cee2a1858b95400e96.jpg?v=1697242974&width=823", "Descroption exapmple"));
         };
     }
 

@@ -7,39 +7,27 @@
         <meta name="author" content="Mario Esparza">
         <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
         <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
-        <link href="/css/Products.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/Product.css" rel="stylesheet" media="all" type="text/css"/>
     </head>
     <body>
-        <header>
-            <a class='nombreLogo' href='/'>HoopStyles</a>
-            <div id='header-items'>
-                <div id='searchBar'>
-                    <form id='formSearch' action='' method='GET'>
-                        <input type='search' name='search' placeholder='Search...'/>
-                        <input type='image' src='/icons/Lens.svg' name='submit-search'/>
-                    </form>
-                </div>
-                <div id='cart'>
-                    <a href=''><img id='cartImg' src='/icons/Cart.svg' alt='cart'></a>
-                    <span th:if="${user != null}" id='numberCart'>0</span>
-                </div>
-                <div id='user' href='/profile'>
-                    <img id='userImg' src='/icons/User.svg' alt=''>
-                    <div class="profileDetails">
-                        <a th:if="${user == null}" href='/auth/login'>Login</a>
-                        <a href='/profile'>Profile</a>
-                        <a th:if="${user != null}" href='/auth/logout'>Logout</a>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <header th:replace="~{layouts/header::header}"></header>
         <main>
             <form>
                 <div class="product">
-                    <img th:src="${product.getImage()}" alt='product'/>
-                    <h2 th:text="${product.getName()}"></h2>
-                    <p th:text="${product.getPrice()}"></p>
-                    <input type="submit" value="Add to cart"/>
+                    <section class="productImage">
+                        <img th:src="${product.getImage()}" alt='product'/>
+                    </section>
+                    <section class="productDetails">
+                        <article class="info">
+                            <h1 th:text="${product.getName()}"></h1>
+                            <p th:text="${product.getPrice()}"></p>
+                            <input type="submit" value="Add to cart"/>
+                        </article>
+                        <article class="description">
+                            <h3>Description</h3>
+                            <p th:if="${product.getDescription() != null}" th:text="${product.getDescription()}"></p>
+                        </article>
+                    </section>
                 </div>
             </form>
         </main>

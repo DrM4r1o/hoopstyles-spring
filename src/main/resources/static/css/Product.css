@@ -1,0 +1,58 @@
+main {
+    height: 80vh;
+}
+
+form {
+    height: 100%;
+}
+
+.product {
+    display: flex;
+    margin: 30px;
+    height: 100%;
+}
+
+.productImage {
+    display: grid;
+    place-items: center;
+    width: 50%;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.productImage img {
+    width: 70%;
+}
+
+.productDetails {
+    width: 50%;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.productDetails h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.info, .description {
+    padding: 10px;
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.description {
+    height: 100%;
+}
+
+.info input {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    outline: none;
+}

@@ -9,7 +9,7 @@ import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-	
+
 	// Buscar todos los productos de un usuario
 	List<Product> findByOwner(UserHoop owner);
 	

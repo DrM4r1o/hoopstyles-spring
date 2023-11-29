@@ -10,36 +10,14 @@
         <link href="/css/Products.css" rel="stylesheet" media="all" type="text/css"/>
     </head>
     <body>
-        <header>
-            <a class='nombreLogo' href='/'>HoopStyles</a>
-            <div id='header-items'>
-                <div id='searchBar'>
-                    <form id='formSearch' action='' method='GET'>
-                        <input type='search' name='search' placeholder='Search...'/>
-                        <input type='image' src='/icons/Lens.svg' name='submit-search'/>
-                    </form>
-                </div>
-                <div id='cart'>
-                    <a href=''><img id='cartImg' src='/icons/Cart.svg' alt='cart'></a>
-                    <span th:if="${user != null}" id='numberCart'>0</span>
-                </div>
-                <div id='user' href='/profile'>
-                    <img id='userImg' src='/icons/User.svg' alt=''>
-                    <div class="profileDetails">
-                        <a th:if="${user == null}" href='/auth/login'>Login</a>
-                        <a href='/profile'>Profile</a>
-                        <a th:if="${user != null}" href='/auth/logout'>Logout</a>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <header th:replace="~{layouts/header::header}"></header>
         <main>
             <div class="filters">
-                <form action="" method="GET">
+                <form th:action="@{/products/filter}" method="GET">
                     <div class="categories">
                         <div th:each="category : ${categories}" class="categorie">
                             <label>
-                                <input class="hiddenCheckbox" type='checkbox' name="categorie" th:value="${category.getName()}">
+                                <input class="hiddenCheckbox" type='checkbox' name="category" th:value="${category.getName()}">
                                 <span th:text="${category.getName()}"></span>
                             </label>
                         </div>

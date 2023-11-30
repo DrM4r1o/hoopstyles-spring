@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hoopstyles.hoopstyles.model.Category;
-
+import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.services.CategoryService;
 import com.hoopstyles.hoopstyles.services.ProductService;
 
@@ -56,9 +56,11 @@ public class IndexController {
         Model model
     ) 
     {
+        ArrayList<Category> categoriesList = new ArrayList<Category>();
+        boolean hasFilter = false;
+
         if(categories != null)
         {
-            ArrayList<Category> categoriesList = new ArrayList<Category>();
             for(String category : categories.split(",")) {
                 categoriesList.add(categoryService.findByName(category));
             }
@@ -66,17 +68,33 @@ public class IndexController {
                 "products", 
                 productService.findByCategory(categoriesList)
             );
+
+            hasFilter = true;
         }
         if(price != null)
         {
+            List<Product> productsFiltered = new ArrayList<Product>();
             String[] prices = price.split(",");
-            model.addAttribute("products", 
-                productService.findByPriceBetween(
+            
+            if(!categoriesList.isEmpty())
+            {
+                productsFiltered = productService.findByPriceBetweenAndCategory(
+                    Integer.parseInt(prices[0]), 
+                    Integer.parseInt(prices[1]),
+                    categoriesList
+                );
+            } else
+            {
+                productsFiltered = productService.findByPriceBetween(
                     Integer.parseInt(prices[0]), 
                     Integer.parseInt(prices[1])
-                )
-            );
+                );
+            }
+            
+            model.addAttribute("products", productsFiltered);
+            hasFilter = true;
         }
-        return "index";
+
+        return hasFilter ? "index" : "redirect:/";
     }
 }

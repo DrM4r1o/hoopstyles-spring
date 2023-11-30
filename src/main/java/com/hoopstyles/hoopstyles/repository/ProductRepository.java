@@ -22,7 +22,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	//Buscar todos los productos donde la compra sea nula (que no se hayan vendido)
 	List<Product> findByOrderIsNull();
 
-    List<Product> findByPriceBetween(int min, int max);
+    List<Product> findByPriceBetween(int min, int max); 
+
+    List<Product> findByPriceBetweenAndCategoriesIn(int min, int max, List<Category> categories);
 	
 	// Buscar productos que no se hayan comprado y que contengan una cadena de caracteres
 	List<Product> findByNameContainsIgnoreCaseAndOrderIsNull(String name);

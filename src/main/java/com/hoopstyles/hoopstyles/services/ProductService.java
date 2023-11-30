@@ -56,6 +56,10 @@ public class ProductService {
     public List<Product> findByCategory(List<Category> categories) {
         return repositorio.findByCategoriesIn(categories);
     }
+
+    public List<Product> findByPriceBetweenAndCategory(int min, int max, List<Category> categories) {
+        return repositorio.findByPriceBetweenAndCategoriesIn(min, max, categories);
+    }
 	
 	public List<Product> all() {
 		return repositorio.findAll();

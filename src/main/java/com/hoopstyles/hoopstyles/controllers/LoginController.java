@@ -40,6 +40,7 @@ public class LoginController {
 	
 	@PostMapping("/auth/register")
 	public String register(@ModelAttribute UserHoop user) {
+        System.out.println();
 		userService.register(user);
         System.out.println("Usuario registrado: " + user);
 		return "redirect:/auth/login";

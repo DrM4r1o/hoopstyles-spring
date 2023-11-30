@@ -25,6 +25,10 @@ public class CategoryService {
     public List<Category> all() {
         return repository.findAll();
     }
+
+    public Category findByName(String name) {
+        return repository.findByName(name);
+    }
     
     public Category edit(Category c) {
         return repository.save(c);
@@ -32,6 +36,14 @@ public class CategoryService {
     
     public void delete(Category c) {
         repository.delete(c);
+    }
+
+    public void save(Category category) {
+        repository.save(category);
+    }
+
+    public long countCategories() {
+        return repository.count();
     }
     
 }

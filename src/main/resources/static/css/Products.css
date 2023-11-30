@@ -187,6 +187,10 @@ main {
     color: white !important;
 }
 
+hr {
+    margin-top: 20px;
+}
+
 @media (width < 1900px) {
     .products {
         grid-template-columns: repeat(3, 0.2fr);

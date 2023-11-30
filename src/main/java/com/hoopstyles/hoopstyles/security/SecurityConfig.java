@@ -38,7 +38,7 @@ public class SecurityConfig {
 		http
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
-                .requestMatchers(AntPathRequestMatcher.antMatcher("/products/**")).permitAll()
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/filter/**")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/product/**")).permitAll()
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/css/**")).permitAll()				
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/icons/**")).permitAll()

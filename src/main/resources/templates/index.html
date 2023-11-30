@@ -13,7 +13,7 @@
         <header th:replace="~{layouts/header::header}"></header>
         <main>
             <div class="filters">
-                <form th:action="@{/products/filter}" method="GET">
+                <form th:action="@{/filter}" method="GET">
                     <div class="categories">
                         <div th:each="category : ${categories}" class="categorie">
                             <label>
@@ -22,21 +22,15 @@
                             </label>
                         </div>
                     </div>
-                    <hr>
-                    <label for="price">Filter by price (€)</label>
-                    <div id="rangePrices">
-                        <label for="minPrice">Min</label>
-                        <input type="range" class="priceRange" id="minPriceRange" name="minPrice" min="0" max="250" value="0" step="1" />
-                        <label for="maxPrice">Max</label>
-                        <input type="range" class="priceRange" id="maxPriceRange" name="maxPrice" min="0" max="250" value="0" step="1" />
-                    </div>
+                    <hr class="separator">
+                    <div th:replace="~{layouts/rangePrice::range}"></div>
                     <input id="filter" type='submit' value='Filter'/>
                 </form>
             </div>
             <div class="products">
                 <div th:each="product : ${products}" class="product">
                     <img th:src="${product.getImage()}" alt='product'/>
-                    <span class="productCategory">TODO Category</span>
+                    <span th:text="${product.getCategoriesString()}" class="productCategory">Category</span>
                     <span th:text="${product.getName()}" class='name'></span>
                     <span th:text="${product.getPrice() + '€'}" class='price'></span>
                     <input type="hidden" th:name="${product.getId()}">
@@ -49,6 +43,7 @@
             const checkboxes = document.querySelectorAll("input[type=checkbox]");
             const profile = document.querySelector("#userImg");
             const products = document.querySelectorAll(".product");
+            const filterButton = document.querySelector("#filter");
             
             profile.addEventListener("click", profileImageOptions);
 
@@ -71,6 +66,18 @@
                     window.location.href = "/product/" + id;
                 });
             });
+
+            filterButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                const inputRanges = document.querySelectorAll("input[name=price]");
+                if(inputRanges[0].value == 0 && inputRanges[1].value == 0)
+                {
+                    inputRanges.forEach(input => {
+                        input.removeAttribute("name");
+                    });
+                }
+                e.target.parentElement.submit();
+            })
 
             function profileImageOptions(e) {
                 const profileClass = document.querySelector(".profileDetails").classList;

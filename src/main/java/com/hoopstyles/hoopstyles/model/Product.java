@@ -1,10 +1,12 @@
 package com.hoopstyles.hoopstyles.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -20,6 +22,9 @@ public class Product {
 	private float price;
 	
 	private String image;
+
+    @ManyToMany
+    private List<Category> categories;
 	
 	@ManyToOne // todo Product tiene un owner
 	private UserHoop owner;
@@ -30,11 +35,19 @@ public class Product {
 	
 	public Product() {}
 
-	public Product(String name, float price, String image, UserHoop owner, String description) {
+	public Product(String name, float price, String image, UserHoop owner, String description, List<Category> categories) {
         ProductBase(name, price);
 		this.image = image;
 		this.owner = owner;
         this.description = description;
+        this.categories = categories;
+	}
+
+    public Product(String name, float price, String image, String description, List<Category> categories) {
+        ProductBase(name, price);
+        this.image = image;
+        this.description = description;
+        this.categories = categories;
 	}
 
     public Product(String name, float price, String image, String description) {
@@ -43,13 +56,15 @@ public class Product {
         this.description = description;
 	}
 
-    public Product(String name, float price, UserHoop owner) {
+    public Product(String name, float price, UserHoop owner, List<Category> categories) {
         ProductBase(name, price);
         this.owner = owner;
+        this.categories = categories;
 	}
 
-    public Product(String name, float price) {
+    public Product(String name, float price, List<Category> categories) {
         ProductBase(name, price);
+        this.categories = categories;
 	}
 
     private void ProductBase(String name, float price) {
@@ -111,6 +126,26 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public String getCategoriesString() {
+        String categoriesString = "";
+        for(Category category : categories) {
+            categoriesString += category.getName() + ",";
+        }
+        return categoriesString.substring(0, categoriesString.length() - 1);
+    }
+
+    public void addCategory(Category category) {
+        this.categories.add(category);
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
 	@Override

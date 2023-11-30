@@ -20,21 +20,14 @@ public class Category {
 
     private String description;
 
-    @ManyToMany
-    private List<Product> products;
+    @ManyToMany(mappedBy = "categories")
+    private List<Product> products = new ArrayList<>();
 
     public Category() { }
-
-    public Category(String name, String description, List<Product> products) {
-        this.name = name;
-        this.description = description;
-        this.products = products;
-    }
 
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
-        this.products = new ArrayList<Product>();
     }
 
     public String getName() {
@@ -45,20 +38,12 @@ public class Category {
         return description;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
     public void setDescription(String description) {
         this.description= description;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 
     public long getId() {

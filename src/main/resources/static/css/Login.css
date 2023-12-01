@@ -88,10 +88,6 @@ a {
     background-color: #ffff;
     color: black;
     border-radius: 20px;
-    perspective: 2500px;
-    box-shadow:  
-    rgba(175, 167, 167, 0.13) -5px -5px 10px 10px,
-    rgba(155, 145, 145, 0.13) 5px 5px 10px 10px; 
 }
 
 #containerForms > form:nth-child(2) {

@@ -17,8 +17,8 @@
                 <img id='userImg' src='/icons/User.svg' alt=''>
                 <div class="profileDetails">
                     <a th:if="${user == null}" href='/auth/login'>Login</a>
-                    <a href='/profile'>Profile</a>
                     <a th:if="${user != null}" href='/auth/logout'>Logout</a>
+                    <a href='/profile'>Profile</a>
                 </div>
             </div>
         </div>

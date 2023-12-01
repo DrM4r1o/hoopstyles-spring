@@ -51,12 +51,6 @@ public class HoopstylesApplication {
         Category shoes = categoryService.findByName("Shoes");
         Category accessories = categoryService.findByName("Accessories");
 
-        if(trousers == null) System.out.println("trousers is null");
-        if(tees == null) System.out.println("tees is null");
-        if(hoodies == null) System.out.println("hoodies is null");
-        if(shoes == null) System.out.println("shoes is null");
-        if(accessories == null) System.out.println("accessories is null");
-
         if (productService.countProducts() > 0 || Arrays.asList(trousers, tees, hoodies, shoes, accessories).contains(null)) {
             return null;
         }

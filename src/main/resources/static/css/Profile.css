@@ -1,0 +1,52 @@
+main {
+    display: grid;
+    height: 90%;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: "options content";
+    color: black;
+}
+
+.options {
+    background-color: grey;
+}
+
+.options > ul {
+    margin-top: 40px;
+    list-style: none;
+}
+
+.options > ul li {
+    padding: 10px;
+    margin: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.content {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    justify-items: center;
+    background-color: white;
+}
+
+.content h3 {
+    margin: 40px;
+    padding: 10px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.optionsBoxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-items: center;
+}
+
+.optionsBoxes > div {
+    width: 200px;
+    height: 200px;
+    background-color: grey;
+    margin: 20px;
+    cursor: pointer;
+}

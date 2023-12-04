@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Profile</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="author" content="Mario Esparza">
+        <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
+    </head>
+    <body>
+        <header th:replace="~{layouts/header::header}"></header>
+        <main>
+            <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
+            <section class="content">
+                <h2 th:text="'Hey ' + ${user.getName() + '!'}">Hey User!</h2>
+                <div class="optionsBoxes">
+                    <a href="/profile/info">
+                        <h3>information</h3>
+                        <p>Edit your personal details, change your password and manage your subscriptions</p>
+                    </a>
+                    <a href="/profile/address">
+                        <h3>Add first address</h3>
+                        <p>Add first address</p>
+                    </a>
+                    <a href="/profile/orders">
+                        <h3>details of my orders</h3>
+                        <p>Find and manage all your orders from here</p>
+                    </a>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

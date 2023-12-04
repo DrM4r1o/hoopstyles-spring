@@ -1,0 +1,26 @@
+.options {
+    font-size: 1.4rem;
+    color: white;
+}
+
+.options > ul {
+    margin-top: 54px;
+    list-style: none;
+}
+
+.options > ul li {
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 70%;
+}
+
+.options > ul > li:last-child {
+    color: rgb(255, 92, 92);
+}
+
+.options > ul li:hover {
+    background-color: rgb(255, 255, 255);
+    color: black;
+}

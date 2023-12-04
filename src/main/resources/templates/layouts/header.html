@@ -22,5 +22,29 @@
                 </div>
             </div>
         </div>
+        <script>
+            const profile = document.querySelector("#userImg");
+            let profileOpen = false;
+
+            window.addEventListener("click", (e) => {
+                if(profileOpen && e.target != profile) profileImageOptions(e);
+            });
+            
+            profile.addEventListener("click", profileImageOptions);
+
+            function profileImageOptions(e) {
+                const profileClass = document.querySelector(".profileDetails").classList;
+                if(profileClass.contains("profileDetailsVisible"))
+                {
+                    profileClass.remove("profileDetailsVisible");
+                    profileOpen = false;
+                }
+                else
+                {
+                    profileClass.add("profileDetailsVisible");
+                    profileOpen = true;
+                }
+            }
+        </script>
     </header>
 </html>

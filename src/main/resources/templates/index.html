@@ -41,11 +41,9 @@
             const quantityInputs = document.querySelectorAll(".quantity");
             const addButtons = document.querySelectorAll(".addToCart");
             const checkboxes = document.querySelectorAll("input[type=checkbox]");
-            const profile = document.querySelector("#userImg");
             const products = document.querySelectorAll(".product");
             const filterButton = document.querySelector("#filter");
-            
-            profile.addEventListener("click", profileImageOptions);
+            const categoryConteiners = document.querySelectorAll(".categorie");
 
             checkboxes.forEach((checkbox) => {
                 checkbox.addEventListener("change", (e) => {
@@ -77,13 +75,14 @@
                     });
                 }
                 e.target.parentElement.submit();
-            })
+            });
 
-            function profileImageOptions(e) {
-                const profileClass = document.querySelector(".profileDetails").classList;
-                if(profileClass.contains("profileDetailsVisible")) profileClass.remove("profileDetailsVisible");
-                else profileClass.add("profileDetailsVisible");
-            }
+            categoryConteiners.forEach((category) => {
+                category.addEventListener("click", (e) => {
+                    const checkbox = category.querySelector("input[type=checkbox]");
+                    checkbox.checked = !checkbox.checked;
+                });
+            });
 
             function checkAllIsChecked(e) {
                 if(e.target.value == "All")

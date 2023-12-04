@@ -20,6 +20,8 @@ main {
     padding: 10px;
     width: 120px;
     border-radius: 5px;
+    cursor: pointer;
+    z-index: 100;
 }
 
 .categorie:hover {
@@ -74,6 +76,7 @@ main {
     display: grid;
     grid-template-columns: repeat(4, 0.2fr);
     justify-content: center;
+    z-index: 0;
 }
 
 .product {

@@ -145,12 +145,7 @@ input[type="search"]:focus {
 
 a {
     text-decoration: none;
-    color: white;
-}
-
-a:hover {
-    color: rgb(255, 92, 92);
-    transition: 0.1s;
+    color: inherit;
 }
 
 @keyframes fade-in {

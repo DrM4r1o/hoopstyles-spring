@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Profile - Information</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Profile">
+        <meta name="author" content="Mario Esparza">
+        <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
+    </head>
+    <body>
+        <header th:replace="~{layouts/header::header}"></header>
+        <main>
+            <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
+            <section class="content">
+
+            </section>
+        </main>
+    </body>
+    <script>
+        const returnButton = document.querySelector(".return");
+        const passwordImg = document.querySelector(".passwordImg");
+        const inputs = document.querySelectorAll(".dataInput input");
+        const form = document.querySelector("form");
+
+        for(let i = 0; i < inputs.length; i++)
+        {
+            if(inputs[i].value !== "" && inputs[i].type !== "password")
+            {
+                inputs[i].parentElement.parentElement.querySelector(".alert").src = "/icons/IconsEdit/check.svg";
+            }
+        }
+
+        passwordImg.addEventListener("click", () => {
+            const passwordInput = document.querySelector(".password");
+            if(passwordInput.type === "password")
+            {
+                passwordInput.type = "text";
+                passwordImg.src = "/icons/IconsEdit/lock-open.svg";
+            }
+            else
+            {
+                passwordInput.type = "password";
+                passwordImg.src = "/icons/IconsEdit/lock.svg";
+            }
+        });
+
+        form.addEventListener("submit", function(e){
+            e.preventDefault();
+            const spanError = document.querySelector(".errorRegister");
+            const inputEmail = form[2];
+
+            if(correctEmail(inputEmail))
+            {
+                e.target.submit();
+            }
+            else
+            {
+                spanError.classList.add("show");
+                spanError.textContent = "Some fields are incorrect";
+            }
+        });
+
+        function correctEmail(emailInput) 
+        {
+            const email = emailInput.value;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const correct = emailRegex.test(email);
+            if(!correct) emailInput.parentElement.classList.add("error");
+            else emailInput.classList.remove("error");
+            return correct;
+        }
+    </script>
+</html>

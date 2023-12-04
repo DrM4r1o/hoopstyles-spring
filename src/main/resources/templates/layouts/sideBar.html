@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>SideBar</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="sidebar">
+        <meta name="author" content="Mario Esparza">
+    </head>
+    <body>
+        <aside th:fragment="side-bar" class="options">
+            <ul>
+                <li><a href="/profile/info">Information</a></li>
+                <li><a href="/profile/address">Add first address</a></li>
+                <li><a href="/profile/orders">Details of my orders</a></li>
+                <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+        </aside>
+    </body>
+</html>

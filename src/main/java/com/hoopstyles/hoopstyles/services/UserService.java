@@ -17,6 +17,10 @@ public class UserService {
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+
+    public void save(UserHoop user) {
+        repository.save(user);
+    }
 	
     public List<UserHoop> all() {
         return repository.findAll();

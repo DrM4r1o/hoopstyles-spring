@@ -8,69 +8,151 @@
         <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
         <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Information.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
     </head>
     <body>
         <header th:replace="~{layouts/header::header}"></header>
         <main>
             <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
-            <section class="content">
-
+            <section>
+                <form action="#" th:action="@{/profile/info/edit}" class="profile-details" method="post">
+                    <h3 class="title-info">Account Details</h3>
+                    <img class="profile-image" src="/icons/User.svg" alt="profile-image">
+                    <input class="input-image" type="file">
+                    <div class="input-info input-common"><input th:value="${user.name}" class="input-common" type="text"><span>Name</span></div>
+                    <div class="input-info input-common"><input th:value="${user.surname}" class="input-common" type="text"><span>Surname</span></div>
+                    <div class="input-info input-common"><input th:value="${user.email}" class="input-common" type="email"><span>Email</span></div>
+                    <div class="input-info input-common input-password-default"><input class="input-common" type="password"><span>New Password</span></div>
+                    <div class="input-info input-common input-password-default"><input class="input-common" type="password"><span>Confirm Password</span></div>
+                    <button class="save-info" type="submit">Save</button>
+                </form>
             </section>
         </main>
     </body>
     <script>
-        const returnButton = document.querySelector(".return");
-        const passwordImg = document.querySelector(".passwordImg");
-        const inputs = document.querySelectorAll(".dataInput input");
-        const form = document.querySelector("form");
+        // const returnButton = document.querySelector(".return");
+        // const passwordImg = document.querySelector(".passwordImg");
+        // const inputs = document.querySelectorAll(".dataInput input");
+        // const form = document.querySelector("form");
+        const inputInfo = document.querySelectorAll(".input-info > input");
+        const inputNewPassword = document.querySelectorAll(".input-password-default > input");
 
-        for(let i = 0; i < inputs.length; i++)
-        {
-            if(inputs[i].value !== "" && inputs[i].type !== "password")
+        window.addEventListener("load", () => {
+            for(let i = 0; i < inputInfo.length; i++)
             {
-                inputs[i].parentElement.parentElement.querySelector(".alert").src = "/icons/IconsEdit/check.svg";
-            }
-        }
-
-        passwordImg.addEventListener("click", () => {
-            const passwordInput = document.querySelector(".password");
-            if(passwordInput.type === "password")
-            {
-                passwordInput.type = "text";
-                passwordImg.src = "/icons/IconsEdit/lock-open.svg";
-            }
-            else
-            {
-                passwordInput.type = "password";
-                passwordImg.src = "/icons/IconsEdit/lock.svg";
+                if(inputInfo[i].value !== "")
+                {
+                    spanUp(inputInfo[i]);
+                }
+                if(inputInfo[i].value === "")
+                {
+                    inputInfo[i].parentElement.classList.add("input-empty");
+                }
             }
         });
 
-        form.addEventListener("submit", function(e){
-            e.preventDefault();
-            const spanError = document.querySelector(".errorRegister");
-            const inputEmail = form[2];
-
-            if(correctEmail(inputEmail))
+        inputNewPassword[0].addEventListener("input", (e) => {
+            let newPassword = inputNewPassword[0];
+            let confirmPassword = inputNewPassword[1];
+            if(newPassword.value === "")
             {
-                e.target.submit();
+                newPassword.parentElement.classList.add("input-password-default");
+                confirmPassword.parentElement.classList.add("input-password-default");
+                confirmPassword.value = "";
+                spanDown(confirmPassword);
             }
-            else
+            if(e.target.value !== "")
             {
-                spanError.classList.add("show");
-                spanError.textContent = "Some fields are incorrect";
+                newPassword.parentElement.classList.remove("input-password-default");
+                confirmPassword.parentElement.classList.remove("input-password-default");
             }
         });
 
-        function correctEmail(emailInput) 
+        // for(let i = 0; i < inputs.length; i++)
+        // {
+        //     if(inputs[i].value !== "" && inputs[i].type !== "password")
+        //     {
+        //         inputs[i].parentElement.parentElement.querySelector(".alert").src = "/icons/IconsEdit/check.svg";
+        //     }
+        // }
+
+        // passwordImg.addEventListener("click", () => {
+        //     const passwordInput = document.querySelector(".password");
+        //     if(passwordInput.type === "password")
+        //     {
+        //         passwordInput.type = "text";
+        //         passwordImg.src = "/icons/IconsEdit/lock-open.svg";
+        //     }
+        //     else
+        //     {
+        //         passwordInput.type = "password";
+        //         passwordImg.src = "/icons/IconsEdit/lock.svg";
+        //     }
+        // });
+
+        // form.addEventListener("submit", (e) => {
+        //     e.preventDefault();
+        //     const spanError = document.querySelector(".errorRegister");
+        //     const inputEmail = form[2];
+
+        //     if(correctEmail(inputEmail))
+        //     {
+        //         e.target.submit();
+        //     }
+        //     else
+        //     {
+        //         spanError.classList.add("show");
+        //         spanError.textContent = "Some fields are incorrect";
+        //     }
+        // });
+
+        for(let i = 0; i < inputInfo.length; i++)
         {
-            const email = emailInput.value;
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            const correct = emailRegex.test(email);
-            if(!correct) emailInput.parentElement.classList.add("error");
-            else emailInput.classList.remove("error");
-            return correct;
+            inputInfo[i].addEventListener("focus", (e) => {
+                if(e.target.value === "")
+                {
+                    spanUp(e.target);
+                }
+            });
+            inputInfo[i].addEventListener("blur", (e) => {
+                if(e.target.value === "")
+                {
+                    spanDown(e.target);
+                }
+            });
+            inputInfo[i].addEventListener("input", (e) => {
+                if(e.target.value === "")
+                {
+                    e.target.parentElement.classList.add("input-empty");
+                }
+                if(e.target.value !== "")
+                {
+                    e.target.parentElement.classList.remove("input-empty");
+                }
+            });
         }
+
+        function spanUp(input)
+        {
+            input.parentElement.querySelector("span").classList.remove("span-down-animation");
+            input.parentElement.querySelector("span").classList.add("span-up-animation");
+        }
+
+        function spanDown(input)
+        {
+            input.parentElement.querySelector("span").classList.remove("span-up-animation");
+            input.parentElement.querySelector("span").classList.add("span-down-animation");
+        }
+
+        // function correctEmail(emailInput) 
+        // {
+        //     const email = emailInput.value;
+        //     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        //     const correct = emailRegex.test(email);
+        //     if(!correct) emailInput.parentElement.classList.add("error");
+        //     else emailInput.classList.remove("error");
+        //     return correct;
+        // }
     </script>
 </html>

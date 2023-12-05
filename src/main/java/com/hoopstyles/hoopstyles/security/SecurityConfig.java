@@ -37,9 +37,10 @@ public class SecurityConfig {
 		
 		http
 			.authorizeHttpRequests(auth -> auth
-				.requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
-                .requestMatchers(AntPathRequestMatcher.antMatcher("/filter/**")).permitAll()
-                .requestMatchers(AntPathRequestMatcher.antMatcher("/product/**")).permitAll()
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll()
+				// .requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()				
+                // .requestMatchers(AntPathRequestMatcher.antMatcher("/filter/**")).permitAll()
+                // .requestMatchers(AntPathRequestMatcher.antMatcher("/product/**")).permitAll()
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/css/**")).permitAll()				
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/icons/**")).permitAll()
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/webjars/**")).permitAll()
@@ -47,15 +48,15 @@ public class SecurityConfig {
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).permitAll()
 				.anyRequest().authenticated()
 			)
-			.formLogin(login -> login.loginPage("/auth/login") //Página por defecto login
-                                     .usernameParameter("username") //Nombre del campo del formulario
-                                     .loginProcessingUrl("/auth/login-post") // Controlador que manejará la autenticación. Lo implementa Spring Security
-									 .defaultSuccessUrl("/", true) //Si el login es correcto, página por defecto
+			.formLogin(login -> login.loginPage("/auth/login")
+                                     .usernameParameter("username")
+                                     .loginProcessingUrl("/auth/login-post") 
+									 .defaultSuccessUrl("/", true) 
 									 .permitAll() //
 			)
 			.logout(logout -> logout
-									.logoutUrl("/auth/logout") // Cuanto mandemos al usuario a esta ruta en POST se deslogueará automáticamente
-									.logoutSuccessUrl("/")	//Cuando se desloguee
+									.logoutUrl("/auth/logout") 
+									.logoutSuccessUrl("/")
 			
 			)
 			.csrf(csrf -> csrf.disable())

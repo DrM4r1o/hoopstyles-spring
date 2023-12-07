@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.services.UserService;
@@ -49,26 +50,34 @@ public class ProfileController {
         return "profile/information";
     }
 
-    @GetMapping("/info/edit")
-    public String edit(@RequestAttribute("name") String name, 
-                       @RequestAttribute("surname") String surname,
-                       @RequestAttribute("email") String email,
-                       @RequestAttribute("password") String password
+    @PostMapping("/info/edit")
+    public String edit(@RequestParam("name") String name, 
+                       @RequestParam("surname") String surname,
+                       @RequestParam("email") String email,
+                       @RequestParam("newPassword") String newPassword
     ) {
         if(!userIsAuthenticated()) {
             return "redirect:/auth/login";
         }
 
-        if(name == null || surname == null || email == null || password == null) {
+        if(name == null || surname == null || email == null) {
             return "redirect:/profile/info";
         }
 
-        // UserHoop userHoop = userService.findByEmail(getUsername());
-        // userHoop.setName(name);
-        // userHoop.setSurname(surname);
-        // userHoop.setEmail(email);
-        // userHoop.setPassword(password);
-        // userService.save(userHoop);
+        UserHoop userHoop = userService.findByEmail(getUsername());
+        userHoop.setName(name);
+        userHoop.setSurname(surname);
+        if(userHoop.getEmail() != email)
+        {
+            userHoop.setEmail(email);
+            return "redirect:/auth/logout";
+        }
+
+        if(newPassword != null && newPassword != "") {
+            userHoop.setPassword(newPassword);
+        }
+
+        userService.save(userHoop);
         return "redirect:/profile/info";
     }
 

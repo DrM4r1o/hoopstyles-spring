@@ -98,6 +98,43 @@
     color: white;
 }
 
+.dialog-email {
+    background-color: white;
+    top: 15%;
+    left: 9%;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.dialog-email div {
+    display: flex;
+    justify-content: space-around;
+}
+
+.dialog-email p:nth-child(3) {
+    font-weight: 700;
+}
+
+.dialog-email div a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dialog-email div a:hover {
+    background-color: black;
+    color: white;
+}
+
 @keyframes move-up-span {
     0% {
         transform: translateY(0px);

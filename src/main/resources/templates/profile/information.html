@@ -16,14 +16,23 @@
         <main>
             <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
             <section>
-                <form action="#" th:action="@{/profile/info/edit}" class="profile-details" method="post">
+                <form action="#" th:action="@{/profile/info/edit}" method="POST" class="profile-details form-data">
                     <h3 class="title-info">Account Details</h3>
                     <img class="profile-image" src="/icons/User.svg" alt="profile-image">
                     <input class="input-image" type="file">
-                    <div class="input-info input-common"><input th:value="${user.name}" class="input-common" type="text"><span>Name</span></div>
-                    <div class="input-info input-common"><input th:value="${user.surname}" class="input-common" type="text"><span>Surname</span></div>
-                    <div class="input-info input-common"><input th:value="${user.email}" class="input-common" type="email"><span>Email</span></div>
-                    <div class="input-info input-common input-password-default"><input class="input-common" type="password"><span>New Password</span></div>
+                    <div class="input-info input-common"><input th:value="${user.name}" name="name" class="input-common" type="text"><span>Name</span></div>
+                    <div class="input-info input-common"><input th:value="${user.surname}" name="surname" class="input-common" type="text"><span>Surname</span></div>
+                    <div class="input-info input-common"><input th:value="${user.email}" name="email" class="input-common" type="email"><span>Email</span></div>
+                    <dialog class="dialog-email">
+                        <h4>Alert!</h4>
+                        <p>Are you sure you want to change your email?</p>
+                        <p>You will need to login again!</p>
+                        <div>
+                            <a class="cancel-submit">Cancel</a>
+                            <a class="confirm-submit">Confirm</a>
+                        </div>
+                    </dialog>
+                    <div class="input-info input-common input-password-default"><input class="input-common" name="newPassword" type="password"><span>New Password</span></div>
                     <div class="input-info input-common input-password-default"><input class="input-common" type="password"><span>Confirm Password</span></div>
                     <button class="save-info" type="submit">Save</button>
                 </form>
@@ -34,9 +43,11 @@
         // const returnButton = document.querySelector(".return");
         // const passwordImg = document.querySelector(".passwordImg");
         // const inputs = document.querySelectorAll(".dataInput input");
-        // const form = document.querySelector("form");
+        const form = document.querySelector(".form-data");
         const inputInfo = document.querySelectorAll(".input-info > input");
         const inputNewPassword = document.querySelectorAll(".input-password-default > input");
+        const orginalEmail = document.querySelector(".input-info > input[name='email']").value;
+        const dialogButtons = document.querySelectorAll(".dialog-email a");
 
         window.addEventListener("load", () => {
             for(let i = 0; i < inputInfo.length; i++)
@@ -91,21 +102,31 @@
         //     }
         // });
 
-        // form.addEventListener("submit", (e) => {
-        //     e.preventDefault();
-        //     const spanError = document.querySelector(".errorRegister");
-        //     const inputEmail = form[2];
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const possibleNewMail = document.querySelector(".input-info > input[name='email']").value;
+            if(orginalEmail != possibleNewMail)
+            {
+                const dialog = document.querySelector(".dialog-email");
+                dialog.showModal();
+            }
+            else
+            {
+                form.submit();
+            }
+            // const spanError = document.querySelector(".errorRegister");
+            // const inputEmail = form[2];
 
-        //     if(correctEmail(inputEmail))
-        //     {
-        //         e.target.submit();
-        //     }
-        //     else
-        //     {
-        //         spanError.classList.add("show");
-        //         spanError.textContent = "Some fields are incorrect";
-        //     }
-        // });
+            // if(correctEmail(inputEmail))
+            // {
+            //     e.target.submit();
+            // }
+            // else
+            // {
+            //     spanError.classList.add("show");
+            //     spanError.textContent = "Some fields are incorrect";
+            // }
+        });
 
         for(let i = 0; i < inputInfo.length; i++)
         {
@@ -129,6 +150,23 @@
                 if(e.target.value !== "")
                 {
                     e.target.parentElement.classList.remove("input-empty");
+                }
+            });
+        }
+
+        for(let i = 0; i < dialogButtons.length; i++)
+        {
+            dialogButtons[i].addEventListener("click", (e) => {
+                const dialog = document.querySelector(".dialog-email");
+                if(e.target.classList.contains("confirm-submit"))
+                {
+                    dialog.close();
+                    form.submit();
+                }
+                else
+                {
+                    document.querySelector(".input-info > input[name='email']").value = orginalEmail;
+                    dialog.close();
                 }
             });
         }

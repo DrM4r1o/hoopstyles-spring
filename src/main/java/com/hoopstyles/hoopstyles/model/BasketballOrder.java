@@ -17,28 +17,30 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class) // Necesario para el funcionamiento de CreatedDate
+@EntityListeners(AuditingEntityListener.class)
 public class BasketballOrder {
 
 	@Id @GeneratedValue
 	private long id;
 	
-	@CreatedDate //Genera la fecha a la hora de la inserción en BD
-	@Temporal(TemporalType.TIMESTAMP) //Hace que el campo dateOrder se mapee como fecha y hora en BD
+	@CreatedDate
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateOrder;
 	
 	@ManyToOne
 	private UserHoop owner;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderLine> orderLine;
+    @OneToMany
+    private List<OrderLine> orderLines;
+	
+	private boolean state;
 	
 	public BasketballOrder() { }
 
-	// El ID y la Fecha se autogeneran
-	public BasketballOrder(UserHoop owner, List<OrderLine> orderLine) {
+	public BasketballOrder(UserHoop owner, List<OrderLine> orderLines) {
 		this.owner = owner;
-        this.orderLine = orderLine;
+        this.orderLines = orderLines;
+		this.state = true;
 	}
 
 	public long getId() {
@@ -63,6 +65,30 @@ public class BasketballOrder {
 
 	public void setOwner(UserHoop owner) {
 		this.owner = owner;
+	}
+
+	public List<OrderLine> getOrderLines() {
+		return orderLines;
+	}
+
+	public void setOrderLine(List<OrderLine> orderLines) {
+		this.orderLines = orderLines;
+	}
+
+	public void addOrderLine(OrderLine orderLine) {
+		this.orderLines.add(orderLine);
+	}
+
+	public void removeOrderLine(OrderLine orderLine) {
+		this.orderLines.remove(orderLine);
+	}
+	
+	public boolean isActive() {
+		return state;
+	}
+
+	public void setState(boolean newState) {
+		this.state = newState;
 	}
 
 	@Override

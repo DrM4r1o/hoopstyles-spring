@@ -18,6 +18,9 @@ public class OrderService {
 	
 	@Autowired
 	ProductService productService;
+
+	@Autowired
+	OrderLineService orderLineService;
 	
 	public BasketballOrder insert(BasketballOrder c, UserHoop u) {
 		c.setOwner(u);
@@ -43,5 +46,30 @@ public class OrderService {
 	
 	public List<BasketballOrder> byOwner(UserHoop u) {
 		return repository.findByOwner(u);
+	}
+
+	public int productsInOrder(BasketballOrder c) {
+		return (orderLineService.findByOrder(c.getId())).size();
+	}
+
+	public void delete(BasketballOrder c) {
+		repository.delete(c);
+	}
+
+	public void delete(long id) {
+		repository.deleteById(id);
+	}
+
+	public BasketballOrder getActiveOrder(UserHoop u) {
+		List<BasketballOrder> orders = byOwner(u);
+		for(BasketballOrder order : orders) {
+			if(order.isActive()) {
+				return order;
+			}
+		}
+		BasketballOrder order = new BasketballOrder();
+		order.setOwner(u);
+		order.setState(true);
+		return insert(order);
 	}
 }

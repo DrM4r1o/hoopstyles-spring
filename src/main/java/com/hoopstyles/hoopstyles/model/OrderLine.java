@@ -13,15 +13,17 @@ public class OrderLine {
     @Id @GeneratedValue
     private long id;
 
-    private int quantity;
-
     @ManyToOne
     private Product product;
-
+    
     @ManyToOne
     private BasketballOrder order;
+    
+    private int quantity;
 
-    public OrderLine() { }
+    public OrderLine(BasketballOrder order) { 
+        this.order = order;
+    }
 
     public OrderLine(int quantity, Product product, BasketballOrder order) {
         this.quantity = quantity;

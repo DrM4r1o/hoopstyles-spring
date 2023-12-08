@@ -12,7 +12,7 @@
     <body>
         <header th:replace="~{layouts/header::header}"></header>
         <main>
-            <form>
+            <form th:action="@{/cart/add/} + ${product.id}" method="POST">
                 <div class="product">
                     <section class="productImage">
                         <img th:src="${product.getImage()}" alt='product'/>

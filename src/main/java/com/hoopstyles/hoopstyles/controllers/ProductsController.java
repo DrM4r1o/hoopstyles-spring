@@ -1,6 +1,8 @@
 package com.hoopstyles.hoopstyles.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hoopstyles.hoopstyles.model.BasketballOrder;
+import com.hoopstyles.hoopstyles.model.OrderLine;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
+import com.hoopstyles.hoopstyles.services.OrderService;
 import com.hoopstyles.hoopstyles.services.ProductService;
 import com.hoopstyles.hoopstyles.services.UserService;
 
@@ -23,6 +28,9 @@ public class ProductsController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	OrderService orderService;
 	
 	private UserHoop user;
 	
@@ -30,6 +38,10 @@ public class ProductsController {
 	public String productPage(@PathVariable Long id, Model model) {
 		Product p = productService.findById(id);
         model.addAttribute("product", p);
+		if(userIsAuthenticated())
+		{
+			model.addAttribute("orderLine", new OrderLine(orderService.getActiveOrder(user)));
+		}
 		return "product";
 	}
 	
@@ -52,5 +64,25 @@ public class ProductsController {
 		productService.insert(product);
 		return "redirect:/app/myproducts";
 	}
+
+	    private boolean userIsAuthenticated() {
+        String name = getUsername();
+        
+        if(name == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private String getUsername() {
+        try {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String name = user.getUsername();
+            return name;
+        } catch(Exception e) {
+            return null;
+        }
+    }
 	
 }

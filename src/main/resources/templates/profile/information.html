@@ -16,13 +16,13 @@
         <main>
             <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
             <section>
-                <form action="#" th:action="@{/profile/info/edit}" method="POST" class="profile-details form-data">
+                <form action="#" th:action="@{/profile/info/edit}" th:object="${infoProfileUpdated}" method="POST" class="profile-details form-data">
                     <h3 class="title-info">Account Details</h3>
                     <img class="profile-image" src="/icons/User.svg" alt="profile-image">
                     <input class="input-image" type="file">
-                    <div class="input-info input-common"><input th:value="${user.name}" name="name" class="input-common" type="text"><span>Name</span></div>
-                    <div class="input-info input-common"><input th:value="${user.surname}" name="surname" class="input-common" type="text"><span>Surname</span></div>
-                    <div class="input-info input-common"><input th:value="${user.email}" name="email" class="input-common" type="email"><span>Email</span></div>
+                    <div class="input-info input-common"><input th:field="*{name}" class="input-common" type="text"><span>Name</span></div>
+                    <div class="input-info input-common"><input th:field="*{surname}" class="input-common" type="text"><span>Surname</span></div>
+                    <div class="input-info input-common"><input th:field="*{email}" class="input-common" type="email"><span>Email</span></div>
                     <dialog class="dialog-email">
                         <h4>Alert!</h4>
                         <p>Are you sure you want to change your email?</p>
@@ -32,7 +32,7 @@
                             <a class="confirm-submit">Confirm</a>
                         </div>
                     </dialog>
-                    <div class="input-info input-common input-password-default"><input class="input-common" name="newPassword" type="password"><span>New Password</span></div>
+                    <div class="input-info input-common input-password-default"><input class="input-common" th:field="*{newPassword}" type="password"><span>New Password</span></div>
                     <div class="input-info input-common input-password-default"><input class="input-common" type="password"><span>Confirm Password</span></div>
                     <button class="save-info" type="submit">Save</button>
                 </form>

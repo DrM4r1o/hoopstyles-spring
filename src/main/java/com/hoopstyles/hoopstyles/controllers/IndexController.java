@@ -16,6 +16,8 @@ import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.services.CategoryService;
 import com.hoopstyles.hoopstyles.services.ProductService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class IndexController {
 
@@ -24,6 +26,19 @@ public class IndexController {
 
     @Autowired
 	ProductService productService;
+
+    @GetMapping("/")
+    public String index(Model model, HttpSession session) {
+        if(session.getAttribute("targetURL") != null)
+        {
+            String targetURL = session.getAttribute("targetURL").toString();
+            session.removeAttribute("targetURL");
+            targetURL = targetURL.replace("http://localhost:9000", "");
+            return "redirect:" + targetURL;
+        }
+        model.addAttribute("products", productService.all());
+        return "index";
+    }
 
     @ModelAttribute("user")
 	public String usuario(Model model) {
@@ -43,12 +58,6 @@ public class IndexController {
         return categoryService.all();
     }
     
-    @GetMapping("/")
-	public String index(Model model) {
-        model.addAttribute("products", productService.all());
-		return "index";
-	}
-
     @GetMapping("/filter")
     public String filterProducts(
         @RequestParam(name="category", required=false) String categories, 

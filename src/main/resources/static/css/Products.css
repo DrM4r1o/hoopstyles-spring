@@ -93,11 +93,16 @@ main {
     color: black;
     font-weight: 700;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
 }
 
 .product > img {
     min-width: 300px;
     min-height: 400px; 
+}
+
+.product:hover {
+    scale: 1.03;
 }
 
 .filters {

@@ -20,6 +20,10 @@ public class OrderLineService {
         return repository.save(ol);
     }
 
+    public OrderLine save(OrderLine ol) {
+        return repository.save(ol);
+    }
+
     public List<OrderLine> findById(long id) {
         return repository.findById(id);
     }
@@ -27,6 +31,14 @@ public class OrderLineService {
     public OrderLine saveOrderLine(BasketballOrder bo, Product p) {
         OrderLine ol = new OrderLine(1, p, bo);
     	return repository.save(ol);
+    }
+
+    public OrderLine findByOrderAndProduct(BasketballOrder order, Product product) {
+        return repository.findByOrderAndProduct(order, product);
+    }
+
+    public void delete(OrderLine ol) {
+        repository.delete(ol);
     }
     
 }

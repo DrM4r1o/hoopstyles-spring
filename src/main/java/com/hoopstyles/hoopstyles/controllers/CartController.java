@@ -66,6 +66,26 @@ public class CartController {
 		return "redirect:/product/" + id;
 	}
 
+    @GetMapping("/remove/{id}")
+    public String removeFromCart(@PathVariable Long id, Model model) {
+        UserHoop user = userService.findByEmail(userService.getUsername());
+        if(user == null) {
+            return "redirect:/auth/login";
+        }
+
+        Product product = productService.findById(id);
+        BasketballOrder order = orderService.getActiveOrder(user);
+        OrderLine orderLine = orderLineService.findByOrderAndProduct(order, product);
+        
+        order.removeOrderLine(orderLine);
+        orderService.save(order);
+
+        orderLineService.delete(orderLine);
+        orderLineService.save(orderLine);
+
+        return "redirect:/cart";
+    }
+
     @ModelAttribute("user")
 	public String usuario(Model model) {
 		return userService.getUsername();

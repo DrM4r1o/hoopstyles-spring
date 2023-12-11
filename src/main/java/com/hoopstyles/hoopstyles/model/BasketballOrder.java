@@ -1,5 +1,7 @@
 package com.hoopstyles.hoopstyles.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -43,6 +45,11 @@ public class BasketballOrder {
 		this.state = true;
 	}
 
+    public BasketballOrder(UserHoop owner) {
+        this.owner = owner;
+        this.state = true;
+    }
+
 	public long getId() {
 		return id;
 	}
@@ -76,7 +83,14 @@ public class BasketballOrder {
 	}
 
 	public void addOrderLine(OrderLine orderLine) {
-		this.orderLines.add(orderLine);
+        if(this.orderLines == null)
+        {
+            this.orderLines = List.of(orderLine);
+        }
+        else
+        {
+            this.orderLines.add(orderLine);
+        }
 	}
 
 	public void removeOrderLine(OrderLine orderLine) {
@@ -90,6 +104,19 @@ public class BasketballOrder {
 	public void setState(boolean newState) {
 		this.state = newState;
 	}
+
+    public double getTotal() {
+        double total = 0;
+        for(OrderLine orderLine : this.orderLines) {
+            total += orderLine.getSubtotal();
+        }
+
+        total = Double.parseDouble(
+            String.format("%.2f", total)
+            .replace(",", ".")
+        );
+        return total;
+    }
 
 	@Override
 	public int hashCode() {

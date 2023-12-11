@@ -11,8 +11,6 @@ import org.springframework.context.annotation.Bean;
 
 import com.hoopstyles.hoopstyles.model.Category;
 import com.hoopstyles.hoopstyles.model.Product;
-import com.hoopstyles.hoopstyles.repository.CategoryRepository;
-import com.hoopstyles.hoopstyles.repository.ProductRepository;
 import com.hoopstyles.hoopstyles.services.CategoryService;
 import com.hoopstyles.hoopstyles.services.ProductService;
 

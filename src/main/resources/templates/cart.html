@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Profile</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="author" content="Mario Esparza">
+        <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/Cart.css" rel="stylesheet" media="all" type="text/css"/>
+    </head>
+    <body>
+        <header th:replace="~{layouts/header::header}"></header>
+        <main>
+            <h2 th:text="${'Your Cart (' + order.getOrderLines().size + ')'}">Your Cart</h2> 
+            <div class="data-cart">
+                <section class="products">
+                    <div class="product" th:each="orderLine : ${order.getOrderLines()}">
+                        <section>
+                            <img th:src="${orderLine.getProduct().getImage()}" alt='product'/>
+                        </section>
+                        <section>
+                            <h2 class="product-title" th:text="${orderLine.getProduct().getName()}"></h2>
+                            <p class="product-category" th:text="${orderLine.getProduct().getCategoriesString()}"></p>
+                            <p th:text="${orderLine.getProduct().getPrice() + '€'}"></p>
+                            <div class="counter">
+                                <button class="buttons">-</button>
+                                <input class="quantity" type="number" th:value="${orderLine.getQuantity()}">
+                                <button class="buttons">+</button>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="total">
+                    <h3>TOTAL</h3>
+                    <p><span>Subtotal</span><span th:text="${order.getTotal()}"></span></p>
+                    <p><span>Shipping</span><span>FREE</span></p>
+                    <p><span>Total (TAX Included)</span><span th:text="${order.getTotal()}"></span></p>
+                    <div class="button-conteiner">
+                        <button class="buttons">Keep buying</button>
+                        <button class="buttons">Confirm</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </body>
+    <script>
+        const buttons = document.querySelectorAll('.counter .buttons');
+        const quantity = document.querySelectorAll('.quantity');
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+                if (button.innerText === '+') {
+                    quantity[index].value = parseInt(quantity[index].value) + 1;
+                } else if (quantity[index].value > 0) {
+                    quantity[index].value = parseInt(quantity[index].value) - 1;
+                }
+            });
+        });
+    </script>
+</html>

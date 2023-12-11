@@ -10,8 +10,8 @@
                 </form>
             </div>
             <div id='cart'>
-                <a href=''><img id='cartImg' src='/icons/Cart.svg' alt='cart'></a>
-                <span th:if="${user != null}" id='numberCart'>0</span>
+                <a href='/cart'><img id='cartImg' src='/icons/Cart.svg' alt='cart'></a>
+                <span th:if="${user != null}" th:text="${cartCount}" id='numberCart'>0</span>
             </div>
             <div id='user' href='/profile'>
                 <img id='userImg' src='/icons/User.svg' alt=''>

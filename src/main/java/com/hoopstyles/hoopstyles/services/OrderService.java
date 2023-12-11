@@ -30,6 +30,10 @@ public class OrderService {
 	public BasketballOrder insert(BasketballOrder c) {
 		return repository.save(c);
 	}
+
+    public BasketballOrder save(BasketballOrder c) {
+        return repository.save(c);
+    }
 	
 	public Product addProductoOrder(Product p, BasketballOrder c) {
 		p.setOrder(c);
@@ -37,7 +41,7 @@ public class OrderService {
 	}
 	
 	public BasketballOrder searchById(long id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id);
 	}
 	
 	public List<BasketballOrder> all() {
@@ -49,7 +53,7 @@ public class OrderService {
 	}
 
 	public int productsInOrder(BasketballOrder c) {
-		return (orderLineService.findByOrder(c.getId())).size();
+		return (orderLineService.findById(c.getId())).size();
 	}
 
 	public void delete(BasketballOrder c) {
@@ -67,9 +71,7 @@ public class OrderService {
 				return order;
 			}
 		}
-		BasketballOrder order = new BasketballOrder();
-		order.setOwner(u);
-		order.setState(true);
+		BasketballOrder order = new BasketballOrder(u);
 		return insert(order);
 	}
 }

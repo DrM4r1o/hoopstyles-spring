@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.Category;
 import com.hoopstyles.hoopstyles.model.Product;
+import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.services.CategoryService;
+import com.hoopstyles.hoopstyles.services.OrderService;
 import com.hoopstyles.hoopstyles.services.ProductService;
+import com.hoopstyles.hoopstyles.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -26,6 +30,12 @@ public class IndexController {
 
     @Autowired
 	ProductService productService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
@@ -42,20 +52,22 @@ public class IndexController {
 
     @ModelAttribute("user")
 	public String usuario(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = null;
-
-        if(principal instanceof User) {
-            User user = (User) principal;
-            name = user.getUsername();
-        }
-
-		return name;
+		return userService.getUsername();
 	}
 
     @ModelAttribute("categories")
     public List<Category> categories(Model model) {
         return categoryService.all();
+    }
+
+    @ModelAttribute("cartCount")
+    public int cartCount(Model model) {
+        UserHoop user = userService.findByEmail(userService.getUsername());
+        if(user == null) {
+            return 0;
+        }
+        BasketballOrder order = orderService.getActiveOrder(user);
+        return order.getOrderLines().size();
     }
     
     @GetMapping("/filter")

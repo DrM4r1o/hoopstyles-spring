@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.OrderLine;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
@@ -38,10 +37,6 @@ public class ProductsController {
 	public String productPage(@PathVariable Long id, Model model) {
 		Product p = productService.findById(id);
         model.addAttribute("product", p);
-		if(userIsAuthenticated())
-		{
-			model.addAttribute("orderLine", new OrderLine(orderService.getActiveOrder(user)));
-		}
 		return "product";
 	}
 	

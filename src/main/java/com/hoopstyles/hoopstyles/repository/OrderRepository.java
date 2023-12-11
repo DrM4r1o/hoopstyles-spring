@@ -10,6 +10,7 @@ import com.hoopstyles.hoopstyles.model.UserHoop;
 public interface OrderRepository extends JpaRepository<BasketballOrder, Long> {
 	
 	List<BasketballOrder> findByOwner(UserHoop owner);
-	void insert(BasketballOrder c);
+    BasketballOrder findById(long id);
+
 }
 

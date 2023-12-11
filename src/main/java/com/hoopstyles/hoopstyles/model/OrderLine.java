@@ -21,6 +21,8 @@ public class OrderLine {
     
     private int quantity;
 
+    public OrderLine() { }
+
     public OrderLine(BasketballOrder order) { 
         this.order = order;
     }
@@ -57,6 +59,10 @@ public class OrderLine {
 
     public void setOrder(BasketballOrder order) {
         this.order = order;
+    }
+
+    public double getSubtotal() {
+        return product.getPrice() * quantity;
     }
 
     @Override

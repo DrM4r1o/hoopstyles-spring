@@ -1,19 +1,17 @@
 package com.hoopstyles.hoopstyles.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.InfoProfileUpdated;
 import com.hoopstyles.hoopstyles.model.UserHoop;
+import com.hoopstyles.hoopstyles.services.OrderService;
 import com.hoopstyles.hoopstyles.services.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,15 +24,18 @@ public class ProfileController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OrderService orderService;
+
     @GetMapping("/")
     public String profile(Model model, HttpServletRequest request, HttpSession session) {
-        if(!userIsAuthenticated()) {
+        if(!userService.userIsAuthenticated()) {
             String targetURL = request.getRequestURL().toString();
             session.setAttribute("targetURL", targetURL);
             return "redirect:/auth/login";
         }
 
-        UserHoop userHoop = userService.findByEmail(getUsername());
+        UserHoop userHoop = userService.findByEmail(userService.getUsername());
         model.addAttribute("user", userHoop);
         return "profile/profile";
     }
@@ -46,11 +47,11 @@ public class ProfileController {
 
     @GetMapping("/info")
     public String info(Model model) {
-        if(!userIsAuthenticated()) {
+        if(!userService.userIsAuthenticated()) {
             return "redirect:/auth/login";
         }
         
-        UserHoop userHoop = userService.findByEmail(getUsername());
+        UserHoop userHoop = userService.findByEmail(userService.getUsername());
         model.addAttribute("infoProfileUpdated", new InfoProfileUpdated(
             userHoop.getName(),
             userHoop.getSurname(),
@@ -68,7 +69,7 @@ public class ProfileController {
         String email = infoProfileUpdated.getEmail();
         String newPassword = infoProfileUpdated.getNewPassword();
 
-        if(!userIsAuthenticated()) {
+        if(!userService.userIsAuthenticated()) {
             return "redirect:/auth/login";
         }
 
@@ -76,7 +77,7 @@ public class ProfileController {
             return "redirect:/profile/info";
         }
 
-        UserHoop userHoop = userService.findByEmail(getUsername());
+        UserHoop userHoop = userService.findByEmail(userService.getUsername());
         userHoop.setName(name);
         userHoop.setSurname(surname);
         
@@ -95,24 +96,19 @@ public class ProfileController {
         return "redirect:/profile/info";
     }
 
-    private boolean userIsAuthenticated() {
-        String name = getUsername();
-        
-        if(name == null) {
-            return false;
-        }
+    @ModelAttribute("user")
+	public String usuario(Model model) {
+		return userService.getUsername();
+	}
 
-        return true;
-    }
-
-    private String getUsername() {
-        try {
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String name = user.getUsername();
-            return name;
-        } catch(Exception e) {
-            return null;
+    @ModelAttribute("cartCount")
+    public int cartCount(Model model) {
+        UserHoop user = userService.findByEmail(userService.getUsername());
+        if(user == null) {
+            return 0;
         }
+        BasketballOrder order = orderService.getActiveOrder(user);
+        return order.getOrderLines().size();
     }
 }
 

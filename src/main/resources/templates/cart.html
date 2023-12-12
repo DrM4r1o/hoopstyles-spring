@@ -15,6 +15,7 @@
             <h2 class="title" th:text="${'Your Cart (' + order.getOrderLines().size + ')'}">Your Cart</h2> 
             <div class="data-cart">
                 <section class="products">
+                    <p class="empty-cart" th:if="${order.getOrderLines().size == 0}">Empty</p>
                     <div class="product" th:each="orderLine : ${order.getOrderLines()}">
                         <section>
                             <img th:src="${orderLine.getProduct().getImage()}" alt='product'/>

@@ -40,9 +40,13 @@ public class LoginController {
 	
 	@PostMapping("/auth/register")
 	public String register(@ModelAttribute UserHoop user) {
-        System.out.println();
+        String email = user.getEmail();
+        String emailAdmin = "admin@hoopstyles.com";
+        if(email.equals(emailAdmin)) {
+            user.setRole("ADMIN");
+        }
+
 		userService.register(user);
-        System.out.println("Usuario registrado: " + user);
 		return "redirect:/auth/login";
 	}
 }

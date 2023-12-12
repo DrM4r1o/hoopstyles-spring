@@ -26,10 +26,6 @@ public class OrderService {
 		c.setOwner(u);
 		return repository.save(c);
 	}
-	
-	public BasketballOrder insert(BasketballOrder c) {
-		return repository.save(c);
-	}
 
     public BasketballOrder save(BasketballOrder c) {
         return repository.save(c);
@@ -72,6 +68,6 @@ public class OrderService {
 			}
 		}
 		BasketballOrder order = new BasketballOrder(u);
-		return insert(order);
+		return save(order);
 	}
 }

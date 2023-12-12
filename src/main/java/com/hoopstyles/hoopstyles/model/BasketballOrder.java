@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.criteria.Order;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -32,7 +33,7 @@ public class BasketballOrder {
 	@ManyToOne
 	private UserHoop owner;
 
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     private List<OrderLine> orderLines;
 	
 	private boolean state;
@@ -77,6 +78,10 @@ public class BasketballOrder {
 	public List<OrderLine> getOrderLines() {
 		return orderLines;
 	}
+
+    public boolean alreadyAdded(OrderLine orderLine) {
+        return this.orderLines.contains(orderLine);
+    }
 
 	public void setOrderLine(List<OrderLine> orderLines) {
 		this.orderLines = orderLines;
@@ -136,11 +141,18 @@ public class BasketballOrder {
 				&& Objects.equals(owner, other.owner);
 	}
 
-	@Override
-	public String toString() {
-		return "BasketballOrder [id=" + id + ", dateOrder=" + dateOrder + ", owner=" + owner + "]";
-	}
 	
+
+    @Override
+    public String toString() {
+        return "BasketballOrder{" +
+                "id=" + id +
+                ", dateOrder=" + dateOrder +
+                ", owner=" + owner +
+                ", orderLines=" + orderLines +
+                ", state=" + state +
+                '}';
+    }
 	
 }
 

@@ -16,11 +16,14 @@ h2 {
     grid-template-columns: 2fr 1fr;
     grid-gap: 20px;
     width: 60%;
+    min-height: 200px;
 }
 
 .products {
     background-color: white;
     border-radius: 5px;
+    position: relative;
+    margin-bottom: 20px;
 }
 
 .product {
@@ -32,6 +35,14 @@ h2 {
     padding: 10px;
     color: black;
     border-bottom: 1px solid rgb(31, 29, 29);
+}
+
+.empty-cart {
+    color: black;
+    font-size: 2rem;
+    position: absolute;
+    top: 30%;
+    left: 40%;
 }
 
 .product:last-child {
@@ -73,7 +84,8 @@ h2 {
     color: black;
     background-color: white;
     border-radius: 5px;
-    height: 40%;
+    min-height: 285px;
+    height: 285px;
 }
 
 .total p {

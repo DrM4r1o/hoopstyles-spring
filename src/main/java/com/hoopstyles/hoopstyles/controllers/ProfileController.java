@@ -96,6 +96,20 @@ public class ProfileController {
         return "redirect:/profile/info";
     }
 
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        if(!userService.userIsAuthenticated()) {
+            return "redirect:/auth/login";
+        }
+
+        UserHoop userHoop = userService.findByEmail(userService.getUsername());
+        if(!userHoop.getRole().equals("ADMIN")) {
+            return "redirect:/profile/";
+        }
+        
+        return "profile/admin";
+    }
+
     @ModelAttribute("user")
 	public String usuario(Model model) {
 		return userService.getUsername();

@@ -67,7 +67,9 @@ public class IndexController {
             return 0;
         }
         BasketballOrder order = orderService.getActiveOrder(user);
-        return order.getOrderLines().size();
+        return order.getOrderLines() != null 
+                ? order.getOrderLines().size() 
+                : 0;
     }
     
     @GetMapping("/filter")

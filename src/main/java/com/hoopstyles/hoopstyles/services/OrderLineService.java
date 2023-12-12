@@ -33,6 +33,10 @@ public class OrderLineService {
     	return repository.save(ol);
     }
 
+    public OrderLine findByProduct(Product product) {
+        return repository.findByProduct(product);
+    }
+
     public OrderLine findByOrderAndProduct(BasketballOrder order, Product product) {
         return repository.findByOrderAndProduct(order, product);
     }

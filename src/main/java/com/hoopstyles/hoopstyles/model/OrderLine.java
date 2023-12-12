@@ -76,4 +76,14 @@ public class OrderLine {
     public int hashCode() {
         return Objects.hash(product, quantity, id);
     }
+
+    @Override
+    public String toString() {
+        return "OrderLine{" +
+                "id=" + id +
+                "order=" + order.getId() +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

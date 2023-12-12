@@ -59,9 +59,17 @@ public class CartController {
 
         Product product = productService.findById(id);
         BasketballOrder order = orderService.getActiveOrder(user);
-        OrderLine orderLine = orderLineService.saveOrderLine(order, product);
+        OrderLine orderLine = orderLineService.findByProduct(product) == null
+                            ? orderLineService.saveOrderLine(order, product)
+                            : orderLineService.findByProduct(product);
 
-        order.addOrderLine(orderLine);
+        if(order.alreadyAdded(orderLine)) {
+            orderLine.setQuantity(orderLine.getQuantity() + 1);
+            orderLineService.save(orderLine);
+        } else {
+            order.addOrderLine(orderLine);
+        }
+
         orderService.save(order);
 		return "redirect:/product/" + id;
 	}
@@ -76,12 +84,10 @@ public class CartController {
         Product product = productService.findById(id);
         BasketballOrder order = orderService.getActiveOrder(user);
         OrderLine orderLine = orderLineService.findByOrderAndProduct(order, product);
-        
-        order.removeOrderLine(orderLine);
-        orderService.save(order);
+        System.out.println(orderLine);
+        System.out.println(order);
 
         orderLineService.delete(orderLine);
-        orderLineService.save(orderLine);
 
         return "redirect:/cart";
     }

@@ -1,8 +1,6 @@
 package com.hoopstyles.hoopstyles.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hoopstyles.hoopstyles.model.OrderLine;
+import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.services.OrderService;
@@ -40,12 +38,6 @@ public class ProductsController {
 		return "product";
 	}
 	
-	@GetMapping("/product/new")
-	public String newProductForm(Model model) {
-		model.addAttribute("product", new Product());
-		return "app/product/form";
-	}
-	
 	@PostMapping("/product/nuevo/submit")
 	public String newProductSubmit(@ModelAttribute Product product, @RequestParam("file") MultipartFile file) {	
 		/*
@@ -60,24 +52,19 @@ public class ProductsController {
 		return "redirect:/app/myproducts";
 	}
 
-	    private boolean userIsAuthenticated() {
-        String name = getUsername();
-        
-        if(name == null) {
-            return false;
-        }
+    @ModelAttribute("user")
+	public String usuario(Model model) {
+		return userService.getUsername();
+	}
 
-        return true;
-    }
-
-    private String getUsername() {
-        try {
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String name = user.getUsername();
-            return name;
-        } catch(Exception e) {
-            return null;
+    @ModelAttribute("cartCount")
+    public int cartCount(Model model) {
+        UserHoop user = userService.findByEmail(userService.getUsername());
+        if(user == null) {
+            return 0;
         }
+        BasketballOrder order = orderService.getActiveOrder(user);
+        return order.getOrderLines().size();
     }
 	
 }

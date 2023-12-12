@@ -26,6 +26,7 @@ public class UserHoop {
 	private String name;
 	private String surname;
 	private String profileImg;
+    private String role;
 	
 	@CreatedDate //Genera la fecha a la hora de la inserción en BD
 	@Temporal(TemporalType.TIMESTAMP) //Hace que el campo fechaCompra se mapee como fecha y hora en BD
@@ -44,12 +45,21 @@ public class UserHoop {
 		this.profileImg = profileImg;
 		this.email = email;
 		this.password = password;
+        this.role = "USER";
 	}
 
     public UserHoop(String name, String email, String password) {
         this.name = name;
 		this.email = email;
 		this.password = password;
+        this.role = "USER";
+    }
+
+    public UserHoop(String name, String email, String password, String role) {
+        this.name = name;
+        this.email = email;
+		this.password = password;
+        this.role = role;
 	}
 
 	public long getId() {
@@ -81,8 +91,16 @@ public class UserHoop {
 	}
 
 	public void setProfileImg(String profileImg) {
-		this.profileImg = profileImg;
+        this.profileImg = profileImg;
 	}
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
 	public Date getDateCreation() {
 		return dateCreation;

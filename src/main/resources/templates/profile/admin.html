@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Profile</title>
+        <title>Profile - Admin</title>
         <meta charset="UTF-8">
         <meta name="description" content="">
         <meta name="author" content="Mario Esparza">
         <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Admin.css" rel="stylesheet" media="all" type="text/css"/>
     </head>
     <body>
         <header th:replace="~{layouts/header::header}"></header>
         <main>
-            <h1>ADMIN PAGE</h1>
+            <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
+            <section class="admin-data">
+                <article class="data-summary">
+                    <div class="users-summary">
+                        <h4>Users</h4>
+                        <p th:text="${'Total ' + users.size()}"></p>
+                    </div>
+                    <div class="orders-summary">
+                        <h4>Orders</h4>
+                        <p>Total Orders</p>
+                    </div>
+                    <div class="products-summary">
+                        <h4>Products</h4>
+                        <p>Total Products</p>
+                    </div>
+                </article>
+                <article class="data-graph"></article>
+                <article class="data-products"></article>
+            </section>
         </main>
     </body>
 </html>

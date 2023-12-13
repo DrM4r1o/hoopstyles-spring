@@ -12,7 +12,7 @@
                 <li class="list-options"><a href="/profile/info">Information</a></li>
                 <li class="list-options"><a href="/profile/addresses">My addresses</a></li>
                 <li class="list-options"><a href="/profile/orders">Details of my orders</a></li>
-                <li th:if="${user.role == 'ADMIN'}" class="list-options"><a href="/profile/admin">Admin Panel</a></li>
+                <li th:if="${role == 'ADMIN'}" class="list-options"><a href="/profile/admin">Admin Panel</a></li>
                 <li class="list-options"><a href="/auth/logout">Logout</a><svg th:replace="~{layouts/svg/logout::logout-svg}"></svg></li>
             </ul>
         </aside>

@@ -52,11 +52,12 @@ public class ProfileController {
         }
         
         UserHoop userHoop = userService.findByEmail(userService.getUsername());
-        model.addAttribute("infoProfileUpdated", new InfoProfileUpdated(
-            userHoop.getName(),
-            userHoop.getSurname(),
-            userHoop.getEmail(),
-            null
+        model.addAttribute("infoProfileUpdated", 
+            new InfoProfileUpdated(
+                userHoop.getName(),
+                userHoop.getSurname(),
+                userHoop.getEmail(),
+                null
         ));
         return "profile/information";
     }
@@ -106,6 +107,8 @@ public class ProfileController {
         if(!userHoop.getRole().equals("ADMIN")) {
             return "redirect:/profile/";
         }
+
+        model.addAttribute("users", userService.all());
         
         return "profile/admin";
     }
@@ -113,6 +116,11 @@ public class ProfileController {
     @ModelAttribute("user")
 	public String usuario(Model model) {
 		return userService.getUsername();
+	}
+
+    @ModelAttribute("role")
+	public String role(Model model) {
+		return userService.findByEmail(userService.getUsername()).getRole();
 	}
 
     @ModelAttribute("cartCount")

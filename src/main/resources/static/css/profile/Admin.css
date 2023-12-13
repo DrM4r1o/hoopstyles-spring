@@ -1,0 +1,50 @@
+.admin-data {
+    display: grid;
+	grid-template-columns: 1fr 0.6fr;
+    grid-template-rows: 280px auto;
+    grid-gap: 25px;
+    margin-right: 50px;
+}
+
+.data-summary {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.data-graph {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.data-products {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    height: 92%;
+}
+
+.data-summary, .data-graph, .data-products {
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.data-graph, .data-products {
+    background-color: rgb(255, 255, 255);
+}
+
+.users-summary,
+.orders-summary,
+.products-summary {
+    height: 100%;
+    width: 100%;
+    margin-right: 25px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: all 0.3s ease-in-out;
+    padding: 0 20px 0 20px;
+}
+
+.products-summary {
+    margin-right: 0px;
+}

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
+import com.hoopstyles.hoopstyles.services.CategoryService;
 import com.hoopstyles.hoopstyles.services.OrderService;
 import com.hoopstyles.hoopstyles.services.ProductService;
 import com.hoopstyles.hoopstyles.services.UserService;
@@ -28,6 +29,9 @@ public class ProductsController {
 
 	@Autowired
 	OrderService orderService;
+
+    @Autowired
+    CategoryService categoryService;
 	
 	private UserHoop user;
 	
@@ -37,6 +41,14 @@ public class ProductsController {
         model.addAttribute("product", p);
 		return "product";
 	}
+
+    @PostMapping("/product/remove/{id}")
+    public String removeProduct(@PathVariable Long id, Model model) {
+        Product p = productService.findById(id);
+        categoryService.removeProduct(p);
+        productService.delete(p);
+        return "redirect:/profile/admin";
+    }
 	
 	@PostMapping("/product/nuevo/submit")
 	public String newProductSubmit(@ModelAttribute Product product, @RequestParam("file") MultipartFile file) {	

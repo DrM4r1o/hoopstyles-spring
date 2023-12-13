@@ -96,6 +96,13 @@ main {
     transition: 0.3s ease-in-out;
 }
 
+.product > .name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
 .product > img {
     min-width: 300px;
     min-height: 400px; 

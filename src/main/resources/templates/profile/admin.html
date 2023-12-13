@@ -1,38 +1,95 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Profile - Admin</title>
-        <meta charset="UTF-8">
-        <meta name="description" content="">
-        <meta name="author" content="Mario Esparza">
-        <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
-        <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
-        <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
-        <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
-        <link href="/css/profile/Admin.css" rel="stylesheet" media="all" type="text/css"/>
-    </head>
-    <body>
-        <header th:replace="~{layouts/header::header}"></header>
-        <main>
-            <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
-            <section class="admin-data">
-                <article class="data-summary">
-                    <div class="users-summary">
-                        <h4>Users</h4>
-                        <p th:text="${'Total ' + users.size()}"></p>
-                    </div>
-                    <div class="orders-summary">
-                        <h4>Orders</h4>
-                        <p>Total Orders</p>
-                    </div>
-                    <div class="products-summary">
-                        <h4>Products</h4>
-                        <p>Total Products</p>
-                    </div>
-                </article>
-                <article class="data-graph"></article>
-                <article class="data-products"></article>
-            </section>
-        </main>
-    </body>
+
+<head>
+    <title>Profile - Admin</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="Mario Esparza">
+    <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+    <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="/css/profile/Admin.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.1/Chart.min.css" rel="stylesheet" media="all" type="text/css" />
+</head>
+
+<body>
+    <header th:replace="~{layouts/header::header}"></header>
+    <main>
+        <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
+        <section class="admin-data">
+            <article class="data-summary">
+                <div class="users-summary">
+                    <img class="icons" src="/icons/group_users.svg">
+                    <span class="total-summary" th:text="${users.size()}"></span>
+                    <span>Active users</span>
+                </div>
+                <div class="orders-summary">
+                    <img class="icons green" src="/icons/sell.svg">
+                    <span class="total-summary" th:text="${orders.size()}"></span>
+                    <span>Complete Orders</span>
+                </div>
+                <div class="products-summary">
+                    <img class="icons orange" src="/icons/inventory.svg">
+                    <span class="total-summary" th:text="${products.size()}"></span>
+                    <span>Total products</span>
+                </div>
+            </article>
+            <article class="data-graph">
+                <canvas id="canvas"></canvas>
+            </article>
+            <article class="data-products">
+                <div th:each="product : ${products}" class="product">
+                    <img class="product-image" th:src="${product.getImage()}" alt='product' />
+                    <span th:text="${product.getCategoriesString()}" class="productCategory">Category</span>
+                    <span th:text="${product.getName()}" class='name'></span>
+                    <span th:text="${product.getPrice() + '€'}" class='price'></span>
+                    <input type="hidden" th:name="${product.getId()}">
+                    <form class="form-remove" th:action="${'/product/remove/' + product.getId()}" method="post">
+                        <input type="submit" value="Remove" class="remove-button">
+                    </form>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.1/chart.min.js"></script>
+<script>
+    const canvas = document.getElementById('canvas').getContext('2d');
+
+    let chart = new Chart(canvas, {
+        type: 'bar', 
+        data: {
+            labels: ['October', 'November', 'December', 'January'],
+            datasets: [{
+                label: "Sales (€)",
+                data: [10,20,40,50],
+                backgroundColor: [
+                    'green',
+                    'green',
+                    'green',
+                    'green'
+                ]
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid : {
+                        display: false
+                    }
+                },
+                x: {
+                    grid : {
+                        display: false
+                    }
+                }
+            }
+        }
+    })
+</script>
+
 </html>

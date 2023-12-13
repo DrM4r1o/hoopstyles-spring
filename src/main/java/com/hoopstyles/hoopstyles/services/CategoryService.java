@@ -45,5 +45,13 @@ public class CategoryService {
     public long countCategories() {
         return repository.count();
     }
+
+    public void removeProduct(com.hoopstyles.hoopstyles.model.Product p) {
+        List<Category> categories = repository.findAll();
+        for (Category category : categories) {
+            category.removeProduct(p);
+            repository.save(category);
+        }
+    }
     
 }

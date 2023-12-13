@@ -12,6 +12,7 @@ import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.InfoProfileUpdated;
 import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.services.OrderService;
+import com.hoopstyles.hoopstyles.services.ProductService;
 import com.hoopstyles.hoopstyles.services.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,9 @@ public class ProfileController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/")
     public String profile(Model model, HttpServletRequest request, HttpSession session) {
@@ -109,6 +113,8 @@ public class ProfileController {
         }
 
         model.addAttribute("users", userService.all());
+        model.addAttribute("orders", orderService.all());
+        model.addAttribute("products", productService.all());
         
         return "profile/admin";
     }

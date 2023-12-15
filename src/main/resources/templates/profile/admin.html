@@ -46,17 +46,34 @@
                     <span th:text="${product.getName()}" class='name'></span>
                     <span th:text="${product.getPrice() + '€'}" class='price'></span>
                     <input type="hidden" th:name="${product.getId()}">
-                    <form class="form-remove" th:action="${'/product/remove/' + product.getId()}" method="post">
-                        <input type="submit" value="Remove" class="remove-button">
-                    </form>
+                    <div class="buttons-actions">
+                        <form class="form-remove" th:action="${'/product/remove/' + product.getId()}" method="post">
+                            <input type="submit" value="Remove" class="remove-button">
+                        </form>
+                        <form class="form-edit" th:action="${'/product/edit/' + product.getId()}" method="post">
+                            <input type="submit" value="Edit" class="edit-button">
+                            <div class="edit-window">
+                                <img th:src="${product.getImage()}" class="edit-image" alt='edit-product' />
+                                <span class='edit-category'>Category: <input name="category" th:value="${product.getCategoriesString()}"></span>
+                                <span class='edit-name'>Name: <input name="name" th:value="${product.getName()}"></span>
+                                <span class='edit-price'>Price: <input name="price" th:value="${product.getPrice() + '€'}"></span>
+                                <a class="edit-button">Close</a>
+                                <a class="edit-button">Save</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </article>
         </section>
+        <div class="overlay"></div>
     </main>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.1/chart.min.js"></script>
 <script>
     const canvas = document.getElementById('canvas').getContext('2d');
+    const formEdit = document.querySelectorAll('.form-edit');
+    const products = document.querySelectorAll('.product');
+    const overlay = document.querySelector('.overlay');
 
     let chart = new Chart(canvas, {
         type: 'bar', 
@@ -89,7 +106,40 @@
                 }
             }
         }
-    })
+    });
+
+    overlay.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    products.forEach(product => {
+        product.addEventListener('click', (e) => {
+            showEditWindow(e.target.querySelector('.form-edit'));
+        });
+    });
+
+    formEdit.forEach(form => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showEditWindow(e.target);
+        })
+    });
+
+    function showEditWindow(element) {
+        const product = element.parentElement.parentElement;
+        const editWindow = element.querySelector('.edit-window');
+            
+        product.classList.add("edit-product");
+        editWindow.style.visibility = 'visible';
+        overlay.style.display = 'block';
+        
+        element.querySelector('.edit-window > a').addEventListener('click', () => {
+            editWindow.style.visibility = 'hidden';
+            overlay.style.display = 'none';
+            product.classList.remove("edit-product");
+        });
+    }
+
 </script>
 
 </html>

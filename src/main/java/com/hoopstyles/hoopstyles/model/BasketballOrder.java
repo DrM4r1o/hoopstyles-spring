@@ -1,7 +1,5 @@
 package com.hoopstyles.hoopstyles.model;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +15,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.criteria.Order;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)

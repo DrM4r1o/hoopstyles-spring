@@ -1,6 +1,7 @@
 package com.hoopstyles.hoopstyles.controllers;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.hoopstyles.hoopstyles.model.Category;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.services.CategoryService;
+import com.hoopstyles.hoopstyles.services.FileService;
 import com.hoopstyles.hoopstyles.services.OrderService;
 import com.hoopstyles.hoopstyles.services.ProductService;
 import com.hoopstyles.hoopstyles.services.UserService;
@@ -39,6 +41,9 @@ public class ProductsController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    FileService fileService;
 	
 	private UserHoop user;
 	
@@ -56,19 +61,17 @@ public class ProductsController {
         productService.delete(p);
         return "redirect:/profile/admin";
     }
-
+       
     @PostMapping("/product/edit/{id}")
     public String editProduct (@PathVariable Long id, 
                                @RequestParam("name") String name,
                                @RequestParam("price") Float price,
                                @RequestParam("category") String category,
-                               @RequestParam("file") MultipartFile file) 
+                               @RequestParam("file") MultipartFile file)
     {
         Product p = productService.findById(id);
         String[] categories = category.split(",");
-
-        p.setName(name);
-        p.setPrice(price);
+        List<Category> cat = new ArrayList<Category>();
 
         for(int i = 0; i < categories.length; i++) {
             Category c = categoryService.findByName(categories[i]);
@@ -76,22 +79,25 @@ public class ProductsController {
                 c = new Category(categories[i], "Category description");
                 categoryService.insert(c);
             }
-            if(!p.getCategories().contains(c))
-            {
-                p.addCategory(c);
-            }
+            cat.add(c);
         }
+
+        p.setCategories(cat);
+
+        if(!p.getName().equals(name) && !name.isEmpty()) {
+            p.setName(name);
+        }
+
+        if(price != null && price > 0) {
+            p.setPrice(price);
+        }
+
         if (!file.isEmpty()) {
-            // Save file in web server folder
-
-            
-
-            
-
-            p.setImagen(MvcUriComponentsBuilder
-                    .fromMethodName(FilesController.class, "serveFile", imagen).build().toUriString());
+            fileService.saveFile(file);
+            p.setImage("/images/" + file.getOriginalFilename());
         }
-        productService.update(p);
+
+        productService.insert(p);
         return "redirect:/profile/admin";
     }
     

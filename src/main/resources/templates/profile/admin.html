@@ -50,15 +50,16 @@
                         <form class="form-remove" th:action="${'/product/remove/' + product.getId()}" method="post">
                             <input type="submit" value="Remove" class="remove-button">
                         </form>
-                        <form class="form-edit" th:action="${'/product/edit/' + product.getId()}" method="post">
+                        <form class="form-edit" th:action="${'/product/edit/' + product.getId()}" method="post" enctype="multipart/form-data">
                             <input type="submit" value="Edit" class="edit-button">
                             <div class="edit-window">
                                 <img th:src="${product.getImage()}" class="edit-image" alt='edit-product' />
-                                <span class='edit-category'>Category: <input name="category" th:value="${product.getCategoriesString()}"></span>
-                                <span class='edit-name'>Name: <input name="name" th:value="${product.getName()}"></span>
-                                <span class='edit-price'>Price: <input name="price" th:value="${product.getPrice() + '€'}"></span>
+                                <input class="edit-file" type="file" name="file">
+                                <span class='edit-category'>Category: <input name="category" type="text" th:value="${product.getCategoriesString()}"></span>
+                                <span class='edit-name'>Name: <input name="name" type="text" th:value="${product.getName()}"></span>
+                                <span class='edit-price'>Price: <input name="price" type="number" th:value="${product.getPrice()}"></span>
                                 <a class="edit-button">Close</a>
-                                <a class="edit-button">Save</a>
+                                <a class="edit-button save">Save</a>
                             </div>
                         </form>
                     </div>
@@ -74,6 +75,8 @@
     const formEdit = document.querySelectorAll('.form-edit');
     const products = document.querySelectorAll('.product');
     const overlay = document.querySelector('.overlay');
+    const save = document.querySelectorAll('.save');
+    const editImage = document.querySelectorAll('.edit-image');
 
     let chart = new Chart(canvas, {
         type: 'bar', 
@@ -121,11 +124,29 @@
     formEdit.forEach(form => {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            showEditWindow(e.target);
+            showEditWindow(form);
+        })
+    });
+
+    save.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const form = e.target.parentElement.parentElement;
+            form.submit();
+        })
+    });
+
+    editImage.forEach(image => {
+        image.addEventListener('click', (e) => {
+            e.preventDefault();
+            const input = e.target.parentElement.querySelector('.edit-file');
+            input.click();
         })
     });
 
     function showEditWindow(element) {
+        console.log(element);
+
         const product = element.parentElement.parentElement;
         const editWindow = element.querySelector('.edit-window');
             

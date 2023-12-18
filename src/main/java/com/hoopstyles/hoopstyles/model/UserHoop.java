@@ -1,6 +1,7 @@
 package com.hoopstyles.hoopstyles.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -13,6 +14,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -27,6 +29,9 @@ public class UserHoop {
 	private String surname;
 	private String profileImg;
     private String role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Address> addresses;
 	
 	@CreatedDate //Genera la fecha a la hora de la inserción en BD
 	@Temporal(TemporalType.TIMESTAMP) //Hace que el campo fechaCompra se mapee como fecha y hora en BD
@@ -61,6 +66,19 @@ public class UserHoop {
 		this.password = password;
         this.role = role;
 	}
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses.clear();
+        this.addresses.addAll(addresses);
+    }
+
+    public void addAddress(Address address) {
+        this.addresses.add(address);
+    }
 
 	public long getId() {
 		return id;

@@ -1,6 +1,6 @@
 package com.hoopstyles.hoopstyles.controllers;
 
-import org.hibernate.mapping.List;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hoopstyles.hoopstyles.model.Address;
 import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.InfoProfileUpdated;
 import com.hoopstyles.hoopstyles.model.UserHoop;
+import com.hoopstyles.hoopstyles.services.AddressService;
 import com.hoopstyles.hoopstyles.services.CategoryService;
 import com.hoopstyles.hoopstyles.services.OrderService;
 import com.hoopstyles.hoopstyles.services.ProductService;
@@ -35,6 +37,9 @@ public class ProfileController {
 
     @Autowired
     private CategoryService categortService;
+
+    @Autowired
+    private AddressService addressService;
 
     @GetMapping("/")
     public String profile(Model model, HttpServletRequest request, HttpSession session) {
@@ -125,18 +130,52 @@ public class ProfileController {
         return "profile/admin";
     }
 
+    @GetMapping("/addresses")
+    public String addresses(Model model) {
+        if(!userService.userIsAuthenticated()) {
+            return "redirect:/auth/login";
+        }
+
+        model.addAttribute("newAddress", new Address());
+
+        return "profile/addresses";
+    }
+
+    @PostMapping("/address/add")
+    public String addAddress(@ModelAttribute("newAddress") Address newAddress) {
+        if(!userService.userIsAuthenticated()) {
+            return "redirect:/auth/login";
+        }
+
+        UserHoop userHoop = userService.findByEmail(userService.getUsername());
+        newAddress.setUser(userHoop);
+
+        if(userHoop.getAddresses().size() == 0) {
+            userHoop.setAddresses(List.of(newAddress));
+        } else
+        {
+            userHoop.addAddress(newAddress);
+        }
+        userService.save(userHoop);
+
+        return "redirect:/profile/addresses";
+    }
+
     @ModelAttribute("user")
-	public String usuario(Model model) {
+	public String usuario() {
 		return userService.getUsername();
 	}
 
     @ModelAttribute("role")
-	public String role(Model model) {
+	public String role() {
+        if(!userService.userIsAuthenticated()) {
+            return "GUEST";
+        }
 		return userService.findByEmail(userService.getUsername()).getRole();
 	}
 
     @ModelAttribute("cartCount")
-    public int cartCount(Model model) {
+    public int cartCount() {
         UserHoop user = userService.findByEmail(userService.getUsername());
         if(user == null) {
             return 0;

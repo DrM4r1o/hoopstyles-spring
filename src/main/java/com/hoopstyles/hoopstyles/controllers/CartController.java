@@ -18,6 +18,11 @@ import com.hoopstyles.hoopstyles.services.OrderService;
 import com.hoopstyles.hoopstyles.services.ProductService;
 import com.hoopstyles.hoopstyles.services.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 @Controller
 @RequestMapping("/cart")
 public class CartController {
@@ -51,7 +56,7 @@ public class CartController {
     }
     
     @PostMapping("/add/{id}")
-	public String addToCart(@PathVariable Long id, Model model) {
+	public String addToCart(@PathVariable Long id, Model model, HttpServletRequest request) {
         UserHoop user = userService.findByEmail(userService.getUsername());
         if(user == null) {
             return "redirect:/auth/login";
@@ -71,26 +76,50 @@ public class CartController {
         }
 
         orderService.save(order);
-		return "redirect:/product/" + id;
+
+        String originURL = request.getHeader("referer");
+
+		return "redirect:" + originURL;
 	}
 
     @GetMapping("/remove/{id}")
     public String removeFromCart(@PathVariable Long id, Model model) {
-        UserHoop user = userService.findByEmail(userService.getUsername());
-        if(user == null) {
+        if(!userService.userIsAuthenticated()) {
             return "redirect:/auth/login";
         }
 
+        UserHoop user = userService.findByEmail(userService.getUsername());
         Product product = productService.findById(id);
         BasketballOrder order = orderService.getActiveOrder(user);
         OrderLine orderLine = orderLineService.findByOrderAndProduct(order, product);
-        System.out.println(orderLine);
-        System.out.println(order);
 
         orderLineService.delete(orderLine);
 
         return "redirect:/cart";
     }
+
+    @PostMapping("/reduce/{id}")
+    public String reduceQuantity(@PathVariable Long id) {
+        if(!userService.userIsAuthenticated()) {
+            return "redirect:/auth/login";
+        }
+
+        UserHoop user = userService.findByEmail(userService.getUsername());
+        Product product = productService.findById(id);
+        BasketballOrder order = orderService.getActiveOrder(user);
+        OrderLine orderLine = orderLineService.findByOrderAndProduct(order, product);
+
+        if(orderLine.getQuantity() == 1) {
+            orderLineService.delete(orderLine);
+            return "redirect:/cart";
+        }
+
+        orderLine.setQuantity(orderLine.getQuantity() - 1);
+        orderLineService.save(orderLine);
+
+        return "redirect:/cart";
+    }
+    
 
     @ModelAttribute("user")
 	public String usuario(Model model) {

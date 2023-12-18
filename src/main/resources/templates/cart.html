@@ -28,8 +28,10 @@
                             <a th:href="${'/cart/remove/'+ orderLine.getProduct().getId()}" class="buttons remove">Remove</a>
                             <div class="counter">
                                 <button class="buttons">-</button>
-                                <input class="quantity" type="number" th:value="${orderLine.getQuantity()}">
+                                <input class="quantity" type="number" th:value="${orderLine.getQuantity()}" readonly>
                                 <button class="buttons">+</button>
+                                <form class="hidden-add" th:action="${'/cart/add/' + orderLine.getProduct().getId()}" method="post"></form>
+                                <form class="hidden-remove" th:action="${'/cart/reduce/' + orderLine.getProduct().getId()}" method="post"></form>
                             </div>
                         </section>
                     </div>
@@ -40,8 +42,8 @@
                     <p><span>Shipping</span><span class="total-prices">FREE</span></p>
                     <p><span>Total (TAX Included)</span><span class="total-prices" th:text="${order.getTotal()}"></span></p>
                     <div class="button-conteiner">
-                        <button class="buttons">Keep buying</button>
-                        <button class="buttons">Confirm</button>
+                        <button th:style="${order.getOrderLines().size == 0} ? 'width: 100%;' : '' " class="buttons keep">Keep buying</button>
+                        <button th:if="${order.getOrderLines().size != 0}" class="buttons confirm">Confirm</button>
                     </div>
                 </section>
             </div>
@@ -49,16 +51,31 @@
     </body>
     <script>
         const buttons = document.querySelectorAll('.counter .buttons');
+        const quantityInput = document.querySelectorAll('.quantity');
+        const keepBuying = document.querySelector('.keep');
+        const confirmOrder = document.querySelector('.confirm');
 
         buttons.forEach((button) => {
             button.addEventListener('click', () => {
+                const formAdd = button.parentElement.querySelector('.hidden-add');
+                const formRemove = button.parentElement.querySelector('.hidden-remove');
                 const quantity = button.parentElement.querySelector('.quantity');
                 if (button.innerText === '+') {
                     quantity.value = parseInt(quantity.value) + 1;
+                    formAdd.submit();
                 } else if (quantity.value > 0) {
                     quantity.value = parseInt(quantity.value) - 1;
+                    formRemove.submit();
                 }
             });
+        });
+
+        keepBuying.addEventListener('click', () => {
+            window.location.href = '/';
+        });
+
+        confirmOrder.addEventListener('click', () => {
+            window.location.href = '/cart/checkout';
         });
     </script>
 </html>

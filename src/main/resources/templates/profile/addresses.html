@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Profile - Addresses</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Profile">
+        <meta name="author" content="Mario Esparza">
+        <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
+    </head>
+    <body>
+        <header th:replace="~{layouts/header::header}"></header>
+        <main>
+            <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
+            <section class="new-address">
+                <form class="profile-details form-data" action="#" th:action="@{/profile/address/add}" th:object="${newAddress}" method="POST">
+                    <input type="text" th:field="*{cp}">
+                    <input type="text" th:field="*{city}">
+                    <input type="text" th:field="*{street}">
+                    <input type="submit">
+                </form>
+            </section>
+        </main>
+    </body>
+</html>

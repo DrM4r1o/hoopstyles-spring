@@ -6,6 +6,5 @@ import com.hoopstyles.hoopstyles.model.UserHoop;
 
 public interface UserRepository extends JpaRepository<UserHoop, Long> {
 
-	// Los emails deberían ser unicos
 	UserHoop findFirstByEmail(String email);
 }

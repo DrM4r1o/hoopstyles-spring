@@ -26,7 +26,7 @@
 .data-products {
     grid-column: 1 / 3;
     grid-row: 3;
-    max-height: 410px;
+    max-height: 470px;
     overflow-y: scroll;
     line-height: 1;
 }

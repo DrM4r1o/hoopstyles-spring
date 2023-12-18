@@ -1,5 +1,6 @@
 package com.hoopstyles.hoopstyles.controllers;
 
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.InfoProfileUpdated;
 import com.hoopstyles.hoopstyles.model.UserHoop;
+import com.hoopstyles.hoopstyles.services.CategoryService;
 import com.hoopstyles.hoopstyles.services.OrderService;
 import com.hoopstyles.hoopstyles.services.ProductService;
 import com.hoopstyles.hoopstyles.services.UserService;
@@ -30,6 +32,9 @@ public class ProfileController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CategoryService categortService;
 
     @GetMapping("/")
     public String profile(Model model, HttpServletRequest request, HttpSession session) {
@@ -115,6 +120,7 @@ public class ProfileController {
         model.addAttribute("users", userService.all());
         model.addAttribute("orders", orderService.all());
         model.addAttribute("products", productService.all());
+        model.addAttribute("categories", categortService.all());
         
         return "profile/admin";
     }
@@ -138,5 +144,6 @@ public class ProfileController {
         BasketballOrder order = orderService.getActiveOrder(user);
         return order.getOrderLines().size();
     }
+
 }
 

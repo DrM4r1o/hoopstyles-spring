@@ -18,15 +18,20 @@
     grid-row: 1;
 }
 
-.data-products {
+.select-options {
     grid-column: 1 / 3;
     grid-row: 2;
-    max-height: 520px;
+}
+
+.data-products {
+    grid-column: 1 / 3;
+    grid-row: 3;
+    max-height: 410px;
     overflow-y: scroll;
     line-height: 1;
 }
 
-.data-summary, .data-graph, .data-products {
+.data-summary, .data-graph, .data-products, .select-options {
     border-radius: 10px;
     transition: all 0.3s ease-in-out;
 }
@@ -127,7 +132,12 @@
     margin-right: 20px;
 }
 
-.remove-button, .edit-button, .close-button {
+.remove-button, 
+.edit-button, 
+.close-button, 
+.add-button, 
+.categories-button,
+.categories-button {
     text-align: center;
     padding: 10px;
     font-family: inherit;
@@ -141,7 +151,11 @@
     transition: 0.3s;
 }
 
-.remove-button:hover, .edit-button:hover, .close-button:hover {
+.remove-button:hover, 
+.edit-button:hover, 
+.close-button:hover, 
+.add-button:hover,
+.categories-button:hover {
     background-color: rgb(155, 62, 62);
     color: rgb(255, 255, 255);
 }
@@ -150,7 +164,7 @@
     transition: none;
 }
 
-.edit-window {
+.edit-window, .new-window {
     visibility: hidden;
     position: absolute;
     top: 18%;
@@ -165,7 +179,7 @@
     border-radius: 10px;
 }
 
-.edit-window > .edit-button {
+.edit-window > .edit-button, .form-add > .edit-button {
     margin-top: 20px;
     width: 200px;
     transition: none;
@@ -200,7 +214,6 @@
     margin-top: 20px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
 }
 
 .edit-image:hover {
@@ -228,4 +241,69 @@
 
 .edit-file {
     display: none;
+}
+
+.select-options {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-categories {
+    width: 100%;
+    position: absolute;
+    border-radius: 5px;
+    list-style: none;
+    color: white;
+    background-color: rgb(31, 29, 29);
+    margin-top: 10px;
+    padding: 0;
+}
+
+.edit-categories {
+    position: relative;
+}
+
+.list-hide {
+    animation: fade-out 0.3s ease-in-out forwards;
+}
+
+.list-show {
+    animation: fade-in linear 0.3s forwards;
+}
+
+.list-categories > li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-weight: 600;
+}
+
+.remove-category {
+    all: unset !important;
+    cursor: pointer;
+}
+
+.categories-button, .add-button {
+    background-color: white;
+    color: black;
+}
+
+.form-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@keyframes fade-out {
+    to {
+        display: none;
+        opacity: 0;
+    }
+}
+
+@keyframes fade-in {
+    to {
+        display: block;
+        opacity: 1;
+    }
 }

@@ -70,19 +70,8 @@ public class ProductsController {
                                @RequestParam("file") MultipartFile file)
     {
         Product p = productService.findById(id);
-        String[] categories = category.split(",");
-        List<Category> cat = new ArrayList<Category>();
 
-        for(int i = 0; i < categories.length; i++) {
-            Category c = categoryService.findByName(categories[i]);
-            if(c == null) {
-                c = new Category(categories[i], "Category description");
-                categoryService.insert(c);
-            }
-            cat.add(c);
-        }
-
-        p.setCategories(cat);
+        p.setCategories(getCategories(category));
 
         if(!p.getName().equals(name) && !name.isEmpty()) {
             p.setName(name);
@@ -100,21 +89,32 @@ public class ProductsController {
         productService.insert(p);
         return "redirect:/profile/admin";
     }
-    
-	
-	@PostMapping("/product/nuevo/submit")
-	public String newProductSubmit(@ModelAttribute Product product, @RequestParam("file") MultipartFile file) {	
-		/*
-		if (!file.isEmpty()) {
-			String imagen = storageService.store(file);
-			producto.setImagen(MvcUriComponentsBuilder
-					.fromMethodName(FilesController.class, "serveFile", imagen).build().toUriString());
-		}
-		*/
-		product.setOwner(user);
-		productService.insert(product);
-		return "redirect:/app/myproducts";
-	}
+
+    @PostMapping("/product/new")
+    public String addProduct(@RequestParam("name") String name,
+                             @RequestParam("price") Float price,
+                             @RequestParam("category") String category,
+                             @RequestParam("file") MultipartFile file)
+    {
+        System.out.println("Entra");
+
+        Product p = new Product();
+
+        p.setCategories(getCategories(category));
+        p.setName(name);
+
+        if(price > 0) {
+            p.setPrice(price);
+        }
+
+        if (!file.isEmpty()) {
+            fileService.saveFile(file);
+            p.setImage("/images/" + file.getOriginalFilename());
+        }
+
+        productService.insert(p);
+        return "redirect:/profile/admin";
+    }
 
     @ModelAttribute("user")
 	public String usuario(Model model) {
@@ -129,6 +129,23 @@ public class ProductsController {
         }
         BasketballOrder order = orderService.getActiveOrder(user);
         return order.getOrderLines().size();
+    }
+
+    private List<Category> getCategories(String category) {
+
+        String[] categories = category.split(",");
+        List<Category> cat = new ArrayList<Category>();
+
+        for(int i = 0; i < categories.length; i++) {
+            Category c = categoryService.findByName(categories[i]);
+            if(c == null) {
+                c = new Category(categories[i], "Category description");
+                categoryService.insert(c);
+            }
+            cat.add(c);
+        }
+
+        return cat;
     }
 	
 }

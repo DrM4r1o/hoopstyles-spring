@@ -39,6 +39,33 @@
             <article class="data-graph">
                 <canvas id="canvas"></canvas>
             </article>
+            <article class="select-options">
+                <div class="edit-categories">
+                    <button class="categories-button">Show Categories</button>
+                    <ul class="list-categories list-hide">
+                        <li th:each="category : ${categories}">
+                            <span th:text="${category.getName()}"></span>
+                            <form th:action="${'/category/remove/' + category.getId()}" method="post">
+                                <input class="remove-category" type="image" value="Remove" src="/icons/trash.svg" alt="trash">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <div class="add-products">
+                    <button class="add-button">Add Product</button>
+                    <div class="new-window">
+                        <form class="form-add" th:action="@{/product/new}" method="post" enctype="multipart/form-data">
+                            <img src="https://crowdsourcer.io/assets/images/no-img.png" class="edit-image" alt='edit-product' />
+                            <input class="edit-file" type="file" name="file">
+                            <span class='edit-category'>Category: <input name="category" type="text" value=""></span>
+                            <span class='edit-name'>Name: <input name="name" type="text" value=""></span>
+                            <span class='edit-price'>Price: <input name="price" type="number" value=""></span>
+                            <a class="edit-button">Close</a>
+                            <a class="edit-button save-new">Save</a>
+                        </form>
+                    </div>
+                </div>
+            </article>
             <article class="data-products">
                 <div th:each="product : ${products}" class="product">
                     <img class="product-image" th:src="${product.getImage()}" alt='product' />
@@ -55,6 +82,7 @@
                             <div class="edit-window">
                                 <img th:src="${product.getImage()}" class="edit-image" alt='edit-product' />
                                 <input class="edit-file" type="file" name="file">
+                                <input class="image-hidden" type="hidden" name="image-hidden" th:value="${product.getImage()}">
                                 <span class='edit-category'>Category: <input name="category" type="text" th:value="${product.getCategoriesString()}"></span>
                                 <span class='edit-name'>Name: <input name="name" type="text" th:value="${product.getName()}"></span>
                                 <span class='edit-price'>Price: <input name="price" type="number" th:value="${product.getPrice()}"></span>
@@ -76,7 +104,11 @@
     const products = document.querySelectorAll('.product');
     const overlay = document.querySelector('.overlay');
     const save = document.querySelectorAll('.save');
+    const saveNew = document.querySelectorAll('.save-new');
     const editImage = document.querySelectorAll('.edit-image');
+    const editFile = document.querySelectorAll('.edit-file');
+    const addProduct = document.querySelector('.add-button');
+    const showCategories = document.querySelector('.categories-button');
 
     let chart = new Chart(canvas, {
         type: 'bar', 
@@ -136,6 +168,14 @@
         })
     });
 
+    saveNew.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const form = e.target.parentElement;
+            form.submit();
+        })
+    });
+
     editImage.forEach(image => {
         image.addEventListener('click', (e) => {
             e.preventDefault();
@@ -144,15 +184,66 @@
         })
     });
 
+    editFile.forEach(input => {
+        input.addEventListener('change', (em) => {
+            const file = em.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const image = e.target.result;
+                const img = em.target.parentElement.querySelector('.edit-image');
+                img.src = image;
+            }
+            reader.readAsDataURL(file);
+        })
+    });
+
+    addProduct.addEventListener('click', (e) => {
+        e.preventDefault();
+        const window = e.target.parentElement.querySelector('.new-window');
+        const form = window.querySelector('.form-add');
+        window.style.visibility = 'visible';
+        overlay.style.display = 'block';
+        
+        form.querySelector('a').addEventListener('click', () => {
+            window.style.visibility = 'hidden';
+            overlay.style.display = 'none';
+        });
+    });
+
+    showCategories.addEventListener('click', (e) => {
+        e.preventDefault();
+        const list = e.target.parentElement.querySelector('.list-categories');
+        if(list.classList.contains('list-hide'))
+        {
+            list.classList.remove('list-hide');
+            list.classList.add('list-show');
+        }
+        else
+        {
+            list.classList.add('list-hide');
+            list.classList.remove('list-show');
+        }
+    });
+
     function showEditWindow(element) {
-        console.log(element);
+        if(element == null)
+        {
+            return;
+        }
 
         const product = element.parentElement.parentElement;
         const editWindow = element.querySelector('.edit-window');
+        const image = element.querySelector('.edit-image');
+        const hidenImage = element.querySelector('.image-hidden');
             
         product.classList.add("edit-product");
         editWindow.style.visibility = 'visible';
         overlay.style.display = 'block';
+
+        if(image.src != hidenImage.value)
+        {
+            image.src = hidenImage.value;
+        }
         
         element.querySelector('.edit-window > a').addEventListener('click', () => {
             editWindow.style.visibility = 'hidden';

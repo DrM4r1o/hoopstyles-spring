@@ -26,6 +26,10 @@ public class CategoryService {
         return repository.findAll();
     }
 
+    public Category findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
     public Category findByName(String name) {
         return repository.findByName(name);
     }

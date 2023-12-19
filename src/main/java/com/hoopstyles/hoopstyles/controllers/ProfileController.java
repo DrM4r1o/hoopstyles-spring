@@ -136,29 +136,12 @@ public class ProfileController {
             return "redirect:/auth/login";
         }
 
+        UserHoop userHoop = userService.findByEmail(userService.getUsername());
+
         model.addAttribute("newAddress", new Address());
+        model.addAttribute("addresses", userHoop.getAddresses());
 
         return "profile/addresses";
-    }
-
-    @PostMapping("/address/add")
-    public String addAddress(@ModelAttribute("newAddress") Address newAddress) {
-        if(!userService.userIsAuthenticated()) {
-            return "redirect:/auth/login";
-        }
-
-        UserHoop userHoop = userService.findByEmail(userService.getUsername());
-        newAddress.setUser(userHoop);
-
-        if(userHoop.getAddresses().size() == 0) {
-            userHoop.setAddresses(List.of(newAddress));
-        } else
-        {
-            userHoop.addAddress(newAddress);
-        }
-        userService.save(userHoop);
-
-        return "redirect:/profile/addresses";
     }
 
     @ModelAttribute("user")

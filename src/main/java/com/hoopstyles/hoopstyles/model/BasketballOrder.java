@@ -32,6 +32,8 @@ public class BasketballOrder {
 
     @OneToMany(mappedBy = "order")
     private List<OrderLine> orderLines;
+
+    private Long addressId;
 	
 	private boolean state;
 	
@@ -46,6 +48,14 @@ public class BasketballOrder {
     public BasketballOrder(UserHoop owner) {
         this.owner = owner;
         this.state = true;
+    }
+
+    public void setAddressId(long addressId) {
+        this.addressId = addressId;
+    }
+
+    public long getAddress() {
+        return addressId;
     }
 
 	public long getId() {

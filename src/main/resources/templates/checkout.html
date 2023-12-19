@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Cart - Checkout</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="author" content="Mario Esparza">
+        <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/Checkout.css" rel="stylesheet" media="all" type="text/css"/>
+    </head>
+    <body>
+        <header th:replace="~{layouts/header::header}"></header>
+        <main>
+            <h2 class="title">Checkout</h2> 
+            <div class="data-checkout">
+                <section class="info-section">
+                    <h3>Order Data</h3>
+                    <form class="profile-details form-data" th:action="@{/order/finish}" method="POST">
+                        <div class="input-info input-common">
+                            <input name="name" class="input-common" th:value="${userData.getName()}" type="text" required>
+                            <span>Name</span>
+                        </div>
+                        <div class="input-info input-common">
+                            <input name="surname" class="input-common" th:value="${userData.getSurname()}" type="text" required>
+                            <span>Surname</span>
+                        </div>
+                        <div class="input-info input-common">
+                            <input name="email" class="input-common" th:value="${userData.getEmail()}" type="email" required>
+                            <span>Email</span>
+                        </div>
+                        <div class="select-address">
+                            <span>Select the destination address:</span>
+                            <select name="address">
+                                <option th:each="address : ${addresses}" th:value="${address.getId()}" th:text="${address.getName()}"></option>
+                            </select>
+                        </div>
+                    </form>
+                </section>
+                <section class="total">
+                    <h3>TOTAL</h3>
+                    <p><span>Subtotal</span><span class="total-prices" th:text="${order.getTotal()}"></span></p>
+                    <p><span>Shipping</span><span class="total-prices">FREE</span></p>
+                    <p><span>Total (TAX Included)</span><span class="total-prices" th:text="${order.getTotal()}"></span></p>
+                    <div class="button-conteiner">
+                        <button class="buttons keep">Return</button>
+                        <button class="buttons confirm">Finish Order</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </body>
+</html>
+
+<script>
+    const keepBuying = document.querySelector('.keep');
+    const confirmOrder = document.querySelector('.confirm');
+
+    const form = document.querySelector(".form-data");
+    const inputInfo = document.querySelectorAll(".input-info > input");
+
+    keepBuying.addEventListener('click', () => {
+        window.location.href = '/cart';
+    });
+
+    confirmOrder.addEventListener('click', () => {
+        form.submit();
+    });
+
+
+    window.addEventListener("load", () => {
+        for(let i = 0; i < inputInfo.length; i++)
+        {
+            if(inputInfo[i].value !== "")
+            {
+                spanUp(inputInfo[i]);
+            }
+            if(inputInfo[i].value === "")
+            {
+                inputInfo[i].parentElement.classList.add("input-empty");
+            }
+        }
+    });
+
+    for(let i = 0; i < inputInfo.length; i++)
+    {
+        inputInfo[i].addEventListener("focus", (e) => {
+            if(e.target.value === "")
+            {
+                spanUp(e.target);
+            }
+        });
+        inputInfo[i].addEventListener("blur", (e) => {
+            if(e.target.value === "")
+            {
+                spanDown(e.target);
+            }
+        });
+        inputInfo[i].addEventListener("input", (e) => {
+            if(e.target.value === "")
+            {
+                e.target.parentElement.classList.add("input-empty");
+            }
+            if(e.target.value !== "")
+            {
+                e.target.parentElement.classList.remove("input-empty");
+            }
+        });
+    }
+
+    function spanUp(input)
+    {
+        input.parentElement.querySelector("span").classList.remove("span-down-animation");
+        input.parentElement.querySelector("span").classList.add("span-up-animation");
+    }
+
+    function spanDown(input)
+    {
+        input.parentElement.querySelector("span").classList.remove("span-up-animation");
+        input.parentElement.querySelector("span").classList.add("span-down-animation");
+    }
+</script>

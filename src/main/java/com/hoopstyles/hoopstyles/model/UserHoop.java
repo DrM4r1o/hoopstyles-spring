@@ -80,6 +80,10 @@ public class UserHoop {
         this.addresses.add(address);
     }
 
+    public void removeAddress(Address address) {
+        this.addresses.remove(address);
+    }
+
 	public long getId() {
 		return id;
 	}

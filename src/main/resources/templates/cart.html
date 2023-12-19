@@ -43,7 +43,7 @@
                     <p><span>Total (TAX Included)</span><span class="total-prices" th:text="${order.getTotal()}"></span></p>
                     <div class="button-conteiner">
                         <button th:style="${order.getOrderLines().size == 0} ? 'width: 100%;' : '' " class="buttons keep">Keep buying</button>
-                        <button th:if="${order.getOrderLines().size != 0}" class="buttons confirm">Confirm</button>
+                        <button th:if="${order.getOrderLines().size != 0}" class="buttons confirm">Next</button>
                     </div>
                 </section>
             </div>

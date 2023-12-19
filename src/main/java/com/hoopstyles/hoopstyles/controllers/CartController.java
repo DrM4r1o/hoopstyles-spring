@@ -19,9 +19,6 @@ import com.hoopstyles.hoopstyles.services.ProductService;
 import com.hoopstyles.hoopstyles.services.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @Controller
 @RequestMapping("/cart")
@@ -119,6 +116,23 @@ public class CartController {
 
         return "redirect:/cart";
     }
+
+    @GetMapping("/checkout")
+    public String checkout(Model model) {
+        if(!userService.userIsAuthenticated()) {
+            return "redirect:/auth/login";
+        }
+
+        UserHoop user = userService.findByEmail(userService.getUsername());
+        BasketballOrder order = orderService.getActiveOrder(user);
+
+        model.addAttribute("userData", user);
+        model.addAttribute("order", order);
+        model.addAttribute("addresses", user.getAddresses());
+
+        return "checkout";
+    }
+    
     
 
     @ModelAttribute("user")

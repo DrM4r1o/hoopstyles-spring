@@ -9,19 +9,63 @@
         <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Addresses.css" rel="stylesheet" media="all" type="text/css"/>
     </head>
     <body>
         <header th:replace="~{layouts/header::header}"></header>
         <main>
             <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
-            <section class="new-address">
-                <form class="profile-details form-data" action="#" th:action="@{/profile/address/add}" th:object="${newAddress}" method="POST">
-                    <input type="text" th:field="*{cp}">
-                    <input type="text" th:field="*{city}">
-                    <input type="text" th:field="*{street}">
-                    <input type="submit">
-                </form>
+            <section class="addresses">
+                <h2 class="title-info">Addresses</h2>
+                <article class="address" th:each="address : ${addresses}">
+                    <div class="title-address">
+                        <h4 th:text="${address.name}"></h4>
+                        <p>▼</p>
+                    </div>
+                    <form action="#" th:action="${'/address/remove/' + address.getId() }" method="POST">
+                        <p>Postal Code: <input type="text" th:value="${address.cp}"></p>
+                        <p>City: <input type="text" th:value="${address.city}"></p>
+                        <p>Street: <input type="text" th:value="${address.street}"></p>
+                        <input type="submit" value="Delete Address">
+                    </form>
+                </article>
+                <article class="address" th:if="${addresses.size() <= 4}">
+                    <div class="title-address">
+                        <h4>New Address</h4>
+                        <p>▼</p>
+                    </div>
+                    <form action="#" th:action="@{/address/add}" th:object="${newAddress}" method="POST">
+                        <p>Address Name: <input type="text" th:field="*{name}"></p>
+                        <p>Postal Code: <input type="text" th:field="*{cp}"></p>
+                        <p>City: <input type="text" th:field="*{city}"></p>
+                        <p>Street: <input type="text" th:field="*{street}"></p>
+                        <input type="submit" value="Save Address">
+                    </form>
+                </article>
             </section>
         </main>
     </body>
 </html>
+
+<script>
+    const addresses = document.querySelectorAll(".address");
+
+    addresses.forEach(address => {
+        address.addEventListener("click", (e) => {
+            if(!e.target.classList.contains("title-address"))
+            {
+                return;
+            }
+
+            if(address.classList.contains("address-open"))
+            {
+                address.classList.remove("address-open");
+            }
+            else
+            {
+                address.classList.add("address-open");
+            }
+
+        });
+    });
+</script>

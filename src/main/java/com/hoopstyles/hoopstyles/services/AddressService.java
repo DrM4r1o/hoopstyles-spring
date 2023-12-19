@@ -30,4 +30,12 @@ public class AddressService {
         return repository.findByUser(a);
     }
 
+    public Address findById(long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public void remove(Address a) {
+        repository.delete(a);
+    }
+
 }

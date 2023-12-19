@@ -17,17 +17,18 @@ public class Address {
     @JoinColumn(name = "user_id")
     private UserHoop user;
 
+    private String name;
     private String street;
     private String city;
     private String cp;
 
-    public Address() {
-    }
+    public Address() { }
 
-    public Address(String street, String city, String cp) {
+    public Address(String street, String city, String cp, String name) {
         this.street = street;
         this.city = city;
         this.cp = cp;
+        this.name = name;
     }
 
     public long getId() {
@@ -64,6 +65,14 @@ public class Address {
 
     public void setCp(String cp) {
         this.cp = cp;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

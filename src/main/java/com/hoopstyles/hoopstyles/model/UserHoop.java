@@ -19,7 +19,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class) // Necesario para el funcionamiento de CreatedDate
+@EntityListeners(AuditingEntityListener.class)
 public class UserHoop {
 	
 	@Id @GeneratedValue
@@ -33,8 +33,8 @@ public class UserHoop {
     @OneToMany(mappedBy = "user")
     private List<Address> addresses;
 	
-	@CreatedDate //Genera la fecha a la hora de la inserción en BD
-	@Temporal(TemporalType.TIMESTAMP) //Hace que el campo fechaCompra se mapee como fecha y hora en BD
+	@CreatedDate
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreation;
 	
 	private String email;

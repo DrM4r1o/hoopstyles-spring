@@ -21,6 +21,8 @@ import com.hoopstyles.hoopstyles.services.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/profile")
@@ -143,6 +145,22 @@ public class ProfileController {
 
         return "profile/addresses";
     }
+
+    @GetMapping("/orders")
+    public String orders(Model model) {
+        if(!userService.userIsAuthenticated()) {
+            return "redirect:/auth/login";
+        }
+
+        UserHoop userHoop = userService.findByEmail(userService.getUsername());
+        List<BasketballOrder> orders = orderService.byOwnerAndState(userHoop, false);
+
+        model.addAttribute("orders", orders);
+        model.addAttribute("addressService", addressService);
+
+        return "profile/orders";
+    }
+    
 
     @ModelAttribute("user")
 	public String usuario() {

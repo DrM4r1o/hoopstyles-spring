@@ -48,6 +48,10 @@ public class OrderService {
 		return repository.findByOwner(u);
 	}
 
+    public List<BasketballOrder> byOwnerAndState(UserHoop u, boolean state) {
+        return repository.findByOwnerAndState(u, state);
+    }
+
 	public int productsInOrder(BasketballOrder c) {
 		return (orderLineService.findById(c.getId())).size();
 	}

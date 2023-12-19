@@ -65,6 +65,10 @@ public class OrderLine {
         return product.getPrice() * quantity;
     }
 
+    public String getImage() {
+        return product.getImage();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

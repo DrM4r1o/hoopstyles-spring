@@ -11,6 +11,7 @@ public interface OrderRepository extends JpaRepository<BasketballOrder, Long> {
 	
 	List<BasketballOrder> findByOwner(UserHoop owner);
     BasketballOrder findById(long id);
+    List<BasketballOrder> findByOwnerAndState(UserHoop owner, boolean state);
 
 }
 

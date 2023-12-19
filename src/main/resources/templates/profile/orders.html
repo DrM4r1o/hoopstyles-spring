@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Profile - Ordes</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Profile">
+        <meta name="author" content="Mario Esparza">
+        <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="/css/profile/Orders.css" rel="stylesheet" media="all" type="text/css"/>
+    </head>
+    <body>
+        <header th:replace="~{layouts/header::header}"></header>
+        <main>
+            <aside th:replace="~{layouts/sideBar::side-bar}"></aside>
+            <section class="orders">
+                <h2 class="title-info">Last Orders</h2>
+                <article th:each="order : ${orders}">
+                    <div class="order">
+                        <p class="id-number" th:text="'Nº ' + ${order.getId()}"></p>
+                        <div class="order-data">
+                            <p>Date: <span class="date" th:text="${order.getDateOrder()}"></span></p>
+                            <p>Total: <span class="total" th:text="${order.getTotal()} + '€'"></span></p>
+                            <p>Address: <span class="total" th:text="${addressService.searchById(order.getAddress()).getStreet()} + ', ' + ${addressService.searchById(order.getAddress()).getCity()}"></span></p>
+                        </div>
+                        <div class="images-order">
+                            <img class="image-order" th:each="orderLine : ${order.getOrderLines()}" th:src="${orderLine.getImage()}" alt="product-image">
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </body>
+</html>

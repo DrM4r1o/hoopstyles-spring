@@ -98,6 +98,10 @@
     </main>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.1/chart.min.js"></script>
+<script th:inline="javascript">
+    const salesData = /*[[${sales}]]*/ 0;
+
+</script>
 <script>
     const canvas = document.getElementById('canvas').getContext('2d');
     const formEdit = document.querySelectorAll('.form-edit');
@@ -113,10 +117,10 @@
     let chart = new Chart(canvas, {
         type: 'bar', 
         data: {
-            labels: ['October', 'November', 'December', 'January'],
+            labels: ['December', 'January', 'February', 'March'],
             datasets: [{
                 label: "Sales (€)",
-                data: [10,20,40,50],
+                data: [salesData,0,0,0],
                 backgroundColor: [
                     'green',
                     'green',
@@ -129,7 +133,7 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 100,
+                    max: 10000,
                     grid : {
                         display: false
                     }

@@ -26,12 +26,8 @@ public class Product {
     @ManyToMany
     private List<Category> categories;
 	
-	@ManyToOne // todo Product tiene un owner
+	@ManyToOne
 	private UserHoop owner;
-	
-	@ManyToOne // Un Product podrá estar en una Order
-	private BasketballOrder order;
-	
 	
 	public Product() {}
 
@@ -112,14 +108,6 @@ public class Product {
 		this.owner = owner;
 	}
 
-	public BasketballOrder getOrder() {
-		return order;
-	}
-
-	public void setOrder(BasketballOrder Order) {
-		this.order = Order;
-	}
-
     public String getDescription() {
         return description;
     }
@@ -150,7 +138,7 @@ public class Product {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(order, id, image, name, price, owner);
+		return Objects.hash(id, image, name, price, owner);
 	}
 
 	@Override
@@ -162,7 +150,7 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(order, other.order) && id == other.id && Objects.equals(image, other.image)
+		return id == other.id && Objects.equals(image, other.image)
 				&& Objects.equals(name, other.name)
 				&& Float.floatToIntBits(price) == Float.floatToIntBits(other.price)
 				&& Objects.equals(owner, other.owner);
@@ -171,7 +159,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", image=" + image
-				+ ", owner=" + owner + ", Order=" + order + "]";
+				+ ", owner=" + owner + "]";
 	}
 	
 	

@@ -1,0 +1,9 @@
+:root {
+    --primary-color: rgb(221, 221, 221);
+    --secundary-color: black;
+    --ternary-color: #26272b;
+    --disabled-color: rgb(99, 99, 99);
+    --empty-input: rgb(255, 92, 92);
+    --hover-color: rgb(89, 131, 89);
+    --white-color: rgb(255, 255, 255);
+}

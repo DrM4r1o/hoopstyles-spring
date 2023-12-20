@@ -6,6 +6,7 @@
         <meta name="description" content="Profile">
         <meta name="author" content="Mario Esparza">
         <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Colors.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
@@ -23,10 +24,10 @@
                         <p>▼</p>
                     </div>
                     <form action="#" th:action="${'/address/remove/' + address.getId() }" method="POST">
-                        <p>Postal Code: <input type="text" th:value="${address.cp}"></p>
-                        <p>City: <input type="text" th:value="${address.city}"></p>
-                        <p>Street: <input type="text" th:value="${address.street}"></p>
-                        <input type="submit" value="Delete Address">
+                        <p>Postal Code: <input type="text" th:value="${address.cp}" readonly></p>
+                        <p>City: <input type="text" th:value="${address.city}" readonly></p>
+                        <p>Street: <input type="text" th:value="${address.street}" readonly></p>
+                        <input class="remove-address" type="submit" value="Delete Address">
                     </form>
                 </article>
                 <article class="address" th:if="${addresses.size() <= 4}">
@@ -36,10 +37,10 @@
                     </div>
                     <form action="#" th:action="@{/address/add}" th:object="${newAddress}" method="POST">
                         <p>Address Name: <input type="text" th:field="*{name}"></p>
-                        <p>Postal Code: <input type="text" th:field="*{cp}"></p>
+                        <p>Postal Code: <input class="input-number" type="text" th:field="*{cp}"></p>
                         <p>City: <input type="text" th:field="*{city}"></p>
                         <p>Street: <input type="text" th:field="*{street}"></p>
-                        <input type="submit" value="Save Address">
+                        <input class="remove-address" type="submit" value="Save Address">
                     </form>
                 </article>
             </section>
@@ -49,6 +50,7 @@
 
 <script>
     const addresses = document.querySelectorAll(".address");
+    const inputNumber = document.querySelector(".input-number");
 
     addresses.forEach(address => {
         address.addEventListener("click", (e) => {
@@ -67,5 +69,12 @@
             }
 
         });
+    });
+
+    inputNumber.addEventListener("input", (e) => {
+        if(isNaN(e.target.value))
+        {
+            e.target.value = e.target.value.slice(0, -1);
+        }
     });
 </script>

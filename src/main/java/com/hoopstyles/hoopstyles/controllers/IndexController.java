@@ -75,7 +75,9 @@ public class IndexController {
     @GetMapping("/filter")
     public String filterProducts(
         @RequestParam(name="category", required=false) String categories, 
-        @RequestParam(name="price", required=false) String price,
+        @RequestParam(name="price", required=false) String price,        
+        @RequestParam(name="search", required=false) String productSearch,
+
         Model model
     ) 
     {
@@ -112,6 +114,23 @@ public class IndexController {
                     Integer.parseInt(prices[0]), 
                     Integer.parseInt(prices[1])
                 );
+            }
+            
+            model.addAttribute("products", productsFiltered);
+            hasFilter = true;
+        }
+        if(productSearch != null)
+        {
+            List<Product> productsFiltered = new ArrayList<Product>();
+            if(!categoriesList.isEmpty())
+            {
+                productsFiltered = productService.search(
+                    productSearch,
+                    categoriesList
+                );
+            } else
+            {
+                productsFiltered = productService.search(productSearch);
             }
             
             model.addAttribute("products", productsFiltered);

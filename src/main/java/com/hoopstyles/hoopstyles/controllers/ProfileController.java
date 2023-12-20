@@ -124,6 +124,16 @@ public class ProfileController {
             return "redirect:/profile/";
         }
 
+        int sales = 0;
+
+        for(BasketballOrder order : orderService.all()) {
+            if(!order.isActive()) {
+                sales += order.getTotal();
+            }
+        }
+
+
+        model.addAttribute("sales", sales);
         model.addAttribute("users", userService.all());
         model.addAttribute("orders", orderService.all());
         model.addAttribute("products", productService.all());

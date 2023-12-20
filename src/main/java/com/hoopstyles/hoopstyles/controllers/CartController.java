@@ -61,15 +61,19 @@ public class CartController {
 
         Product product = productService.findById(id);
         BasketballOrder order = orderService.getActiveOrder(user);
-        OrderLine orderLine = orderLineService.findByProduct(product) == null
+        OrderLine orderLine = orderLineService.findByOrderAndProduct(order, product) == null
                             ? orderLineService.saveOrderLine(order, product)
-                            : orderLineService.findByProduct(product);
+                            : orderLineService.findByOrderAndProduct(order, product);
+
+        System.out.println(orderLine);
 
         if(order.alreadyAdded(orderLine)) {
             orderLine.setQuantity(orderLine.getQuantity() + 1);
             orderLineService.save(orderLine);
+            System.out.println("Ya estaba añadido");
         } else {
             order.addOrderLine(orderLine);
+            System.out.println(order.getOrderLines());
         }
 
         orderService.save(order);

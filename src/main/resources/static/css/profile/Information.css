@@ -2,13 +2,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
+    width: 70%;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
 }
 
 .title-info {
     font-size: 2rem;
     font-weight: 700;
-    color: white;
+    color: var(--primary-color);
     margin-bottom: 20px;
 }
 
@@ -23,11 +26,11 @@
 
 .input-info {
     position: relative;
-    border: solid 2px white;
+    border: solid 4px var(--secundary-color);
     width: 40%;
     height: 50px;
     margin-top: 20px;
-    color: white;
+    color: var(--primary-color);
 }
 
 .input-info > input {
@@ -43,17 +46,17 @@
 }
 
 .input-info > input:focus {
-    outline: black;
+    outline: var(--primary-color);
 }
 
 .input-empty {
-    border: solid 2px rgb(255, 92, 92) !important;
-    color: rgb(255, 92, 92) !important;
+    border: solid 2px var(--empty-input) !important;
+    color: var(--empty-input) !important;
 }
 
 .input-password-default {
-    border: solid 2px rgb(99, 99, 99) !important;
-    color: rgb(99, 99, 99) !important;
+    border: solid 2px var(--disabled-color) !important;
+    color: var(--disabled-color) !important;
 
 }
 
@@ -76,7 +79,7 @@
     pointer-events: none;
     font-weight: 700;
     transition: 0.3s;
-    background-color: #26272b;
+    background-color: var(--ternary-color);
 }
 
 .save-info {
@@ -86,7 +89,8 @@
     font-family: inherit;
     font-size: 1.2rem;
     font-weight: 700;
-    background-color: white;
+    color: var(--primary-color);
+    background-color: var(--secundary-color);
     cursor: pointer;
     border: none;
     border-radius: 5px;
@@ -94,16 +98,17 @@
 }
 
 .save-info:hover {
-    background-color: black;
-    color: white;
+    background-color: var(--hover-color);
 }
 
 .dialog-email {
-    background-color: white;
+    color: var(--primary-color);
+    background-color: var(--secundary-color);
     top: 15%;
     left: 9%;
     padding: 20px;
     border-radius: 10px;
+    border: none;
 }
 
 .dialog-email div {
@@ -128,11 +133,18 @@
     font-weight: 700;
     cursor: pointer;
     transition: 0.3s;
+    color: var(--secundary-color);
+    background-color: var(--primary-color);
 }
 
 .dialog-email div a:hover {
-    background-color: black;
-    color: white;
+    background-color: var(--hover-color);
+    color: var(--primary-color);
+}
+
+.dialog-email div a:first-child:hover {
+    background-color: var(--empty-input);
+    color: var(--secundary-color);
 }
 
 @keyframes move-up-span {

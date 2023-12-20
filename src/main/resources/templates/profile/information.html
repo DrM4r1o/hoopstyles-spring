@@ -6,6 +6,7 @@
         <meta name="description" content="Profile">
         <meta name="author" content="Mario Esparza">
         <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Colors.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Information.css" rel="stylesheet" media="all" type="text/css"/>
@@ -19,7 +20,7 @@
                 <form action="#" th:action="@{/profile/info/edit}" th:object="${infoProfileUpdated}" method="POST" class="profile-details form-data">
                     <h3 class="title-info">Account Details</h3>
                     <img class="profile-image" src="/icons/User.svg" alt="profile-image">
-                    <input class="input-image" type="file">
+                    <!-- <input class="input-image" type="file"> -->
                     <div class="input-info input-common"><input th:field="*{name}" class="input-common" type="text"><span>Name</span></div>
                     <div class="input-info input-common"><input th:field="*{surname}" class="input-common" type="text"><span>Surname</span></div>
                     <div class="input-info input-common"><input th:field="*{email}" class="input-common" type="email"><span>Email</span></div>

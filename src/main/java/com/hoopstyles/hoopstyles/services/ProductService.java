@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.Category;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
@@ -65,22 +64,6 @@ public class ProductService {
 		return repositorio.findAll();
 	}
 	
-	public List<Product> productsOfOwner(UserHoop u) {
-		return repositorio.findByOwner(u);
-	}
-	
-	public List<Product> productsOfOrder(BasketballOrder c) {
-		return repositorio.findByOrder(c);
-	}
-	
-	public List<Product> productUnsold() {
-		return repositorio.findByOrderIsNull();
-	}
-	
-	public List<Product> search(String query) {
-		return repositorio.findByNameContainsIgnoreCaseAndOrderIsNull(query);
-	}
-	
 	public List<Product> searchMyProducts(String query, UserHoop u) {
 		return repositorio.findByNameContainsIgnoreCaseAndOwner(query,u);
 	}
@@ -88,4 +71,12 @@ public class ProductService {
 	public List<Product> variousById(List<Long> ids) {
 		return repositorio.findAllById(ids);
 	}
+
+    public List<Product> search(String query) {
+        return repositorio.findByNameContainsIgnoreCase(query);
+    }
+
+    public List<Product> search(String query, List<Category> categories) {
+        return repositorio.findByNameContainsIgnoreCaseAndCategoriesIn(query, categories);
+    }
 }

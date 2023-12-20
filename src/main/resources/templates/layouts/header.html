@@ -4,7 +4,7 @@
         <a class='nombreLogo' href='/'>HoopStyles</a>
         <div id='header-items'>
             <div id='searchBar'>
-                <form id='formSearch' action='' method='GET'>
+                <form id='formSearch' th:action="@{/filter}" method='GET'>
                     <input type='search' name='search' placeholder='Search...'/>
                     <input type='image' src='/icons/Lens.svg' name='submit-search'/>
                 </form>

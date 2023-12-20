@@ -6,6 +6,7 @@
         <meta name="description" content="Profile">
         <meta name="author" content="Mario Esparza">
         <link rel="shortcut icon" href="/icons/Icon.png" type="image/x-icon">
+        <link href="/css/Colors.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/Header.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Profile.css" rel="stylesheet" media="all" type="text/css"/>
         <link href="/css/profile/Side_Bar.css" rel="stylesheet" media="all" type="text/css"/>
@@ -25,8 +26,17 @@
                             <p>Total: <span class="total" th:text="${order.getTotal()} + '€'"></span></p>
                             <p>Address: <span class="total" th:text="${addressService.searchById(order.getAddress()).getStreet()} + ', ' + ${addressService.searchById(order.getAddress()).getCity()}"></span></p>
                         </div>
-                        <div class="images-order">
-                            <img class="image-order" th:each="orderLine : ${order.getOrderLines()}" th:src="${orderLine.getImage()}" alt="product-image">
+                        <div class="images-order"
+                            th:style="${order.getOrderLines().size() == 1 ? 'display: flex;' : ''}"
+                        >
+                            <img 
+                                class="image-order"
+                                th:style="${order.getOrderLines().size() == 1 ? 'width: 90px; height: 90px;' : ''}"
+                                th:each="orderLine, iterStat  : ${order.getOrderLines()}" 
+                                th:src="${orderLine.getImage()}" 
+                                th:if="${iterStat.index < 4}" 
+                                alt="product-image"
+                            >
                         </div>
                     </div>
                 </article>

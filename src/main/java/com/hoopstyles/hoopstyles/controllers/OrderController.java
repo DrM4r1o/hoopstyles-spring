@@ -49,14 +49,20 @@ public class OrderController {
         {
             return "redirect:/auth/login";
         }
+        if(name == null || email == null || surname == null)
+        {
+            return "redirect:/cart/";
+        }
 
         UserHoop user = userService.findByEmail(userService.getUsername());
         BasketballOrder order = orderService.getActiveOrder(user);
 
+        user.setSurname(surname);
         order.setState(false);
         order.setAddressId(address);
 
         orderService.save(order);
+        userService.save(user);
 
         return "redirect:/";
     }

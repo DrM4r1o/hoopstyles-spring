@@ -100,9 +100,10 @@ public class ProfileController {
         
         if(newPassword != null && newPassword != "") {
             userHoop.setPassword(newPassword);
+            userService.register(userHoop);
         }
         
-        if(userHoop.getEmail() != email)
+        if(!userHoop.getEmail().equals(email))
         {
             userHoop.setEmail(email);
             userService.save(userHoop);

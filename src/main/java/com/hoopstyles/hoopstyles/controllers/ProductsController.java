@@ -17,10 +17,12 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import com.hoopstyles.hoopstyles.model.BasketballOrder;
 import com.hoopstyles.hoopstyles.model.Category;
+import com.hoopstyles.hoopstyles.model.OrderLine;
 import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
 import com.hoopstyles.hoopstyles.services.CategoryService;
 import com.hoopstyles.hoopstyles.services.FileService;
+import com.hoopstyles.hoopstyles.services.OrderLineService;
 import com.hoopstyles.hoopstyles.services.OrderService;
 import com.hoopstyles.hoopstyles.services.ProductService;
 import com.hoopstyles.hoopstyles.services.UserService;
@@ -43,6 +45,9 @@ public class ProductsController {
     CategoryService categoryService;
 
     @Autowired
+    OrderLineService orderLineService;
+
+    @Autowired
     FileService fileService;
 	
 	private UserHoop user;
@@ -57,6 +62,11 @@ public class ProductsController {
     @PostMapping("/product/remove/{id}")
     public String removeProduct(@PathVariable Long id, Model model) {
         Product p = productService.findById(id);
+
+        for (OrderLine orderLine : orderLineService.findByProduct(p)) {
+            orderLineService.remove(orderLine);
+        }
+
         categoryService.removeProduct(p);
         productService.delete(p);
         return "redirect:/profile/admin";

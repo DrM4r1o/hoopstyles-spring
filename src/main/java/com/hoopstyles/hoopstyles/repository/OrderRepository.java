@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.hoopstyles.hoopstyles.model.BasketballOrder;
+import com.hoopstyles.hoopstyles.model.Product;
 import com.hoopstyles.hoopstyles.model.UserHoop;
 
 public interface OrderRepository extends JpaRepository<BasketballOrder, Long> {

@@ -20,6 +20,10 @@ public class OrderLineService {
         return repository.save(ol);
     }
 
+    public void remove(OrderLine ol) {
+        repository.delete(ol);
+    }
+
     public OrderLine save(OrderLine ol) {
         return repository.save(ol);
     }
@@ -33,7 +37,7 @@ public class OrderLineService {
     	return repository.save(ol);
     }
 
-    public OrderLine findByProduct(Product product) {
+    public List<OrderLine> findByProduct(Product product) {
         return repository.findByProduct(product);
     }
 

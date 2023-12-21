@@ -46,7 +46,7 @@ Dentro del área de administración de la aplicación, los usuarios con privileg
 
 Esta zona de administración centraliza las funciones críticas para la gestión efectiva de la tienda en línea, brindando a los administradores el control necesario para mantener un catálogo actualizado, una organización coherente de productos y una visión clara del rendimiento de las ventas. Estas herramientas son fundamentales para tomar decisiones estratégicas y garantizar el éxito continuo de la tienda en línea.
 
-![Untitled](HoopStyles_SB%200143d482a6bf46bbb9d4600385c88c82/Untitled.png)
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/85488d32-fd79-4916-8597-d9e8ff21b3ef/0a74c6b5-53c5-4408-9dee-677139fdfdc6/Untitled.png)
 
 ## Despliegue de la aplicación
 
